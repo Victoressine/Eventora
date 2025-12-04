@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventora – Login</title>
+
+  <link rel="icon" type="image/png" href="image/eventora-logo.png" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Eventora Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            evPrimary: "#facc15",
+            evSecondary: "#16a34a",
+            evAccent: "#0ea5e9",
+            evBg: "#15803d",
+            evBgSoft: "#166534",
+            evCard: "#14532d",
+            evText: "#ffffff",
+            evTextSoft: "#d1d5db",
+            evBorder: "#111827",
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-evBg text-evText">
+
+  <div class="w-full max-w-md mx-4 p-8 rounded-2xl bg-evCard/70 backdrop-blur-xl border border-evBorder shadow-xl">
+
+    <!-- Logo -->
+    <div class="flex justify-center mb-4">
+      <div class="h-20 w-20 rounded-xl bg-gradient-to-br from-evPrimary via-evSecondary to-evAccent shadow-md flex items-center justify-center overflow-hidden">
+        <img src="image/eventora-logo.png" class="object-contain h-20 w-20" />
+      </div>
+    </div>
+
+    <h2 class="text-3xl font-extrabold text-center mb-1">Welcome Back</h2>
+    <p class="text-center text-evTextSoft text-sm mb-8">
+      Choose how you want to log in.
+    </p>
+
+    <!-- SWITCH BUTTONS -->
+    <div class="flex items-center justify-center gap-3 mb-6">
+      <button id="emailTab"
+        class="px-4 py-2 rounded-full bg-evPrimary text-evBg font-semibold text-sm shadow-md transition">
+        Email
+      </button>
+
+      <button id="phoneTab"
+        class="px-4 py-2 rounded-full bg-evBgSoft/50 border border-evPrimary text-evBg font-semibold text-sm transition">
+        Phone
+      </button>
+    </div>
+
+    <!-- FORM -->
+    <form id="loginForm" novalidate>
+
+      <!-- ===== EMAIL LOGIN FIELD ===== -->
+      <div id="emailLogin" class="mb-5">
+        <label class="text-sm font-semibold">Email Address</label>
+        <input id="emailInput" type="email" placeholder="Enter your email"
+          class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none">
+        <small id="emailError" class="hidden text-red-400 text-xs mt-1">
+          Enter a valid email address.
+        </small>
+      </div>
+
+      <!-- ===== PHONE LOGIN FIELD ===== -->
+      <div id="phoneLogin" class="mb-5 hidden">
+        <label class="text-sm font-semibold">Phone Number</label>
+        <div class="flex gap-2">
+          <select id="countryCode"
+            class="px-2 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary">
+            <option value="+233">🇬🇭 +233</option>
+            <option value="+234">🇳🇬 +234</option>
+            <option value="+254">🇰🇪 +254</option>
+            <option value="+256">🇺🇬 +256</option>
+            <option value="+27">🇿🇦 +27</option>
+            <option value="custom">➕ Add More</option>
+          </select>
+
+          <input id="phoneInput" type="text" placeholder="Enter phone number"
+            class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary">
+        </div>
+        <small id="phoneError" class="hidden text-red-400 text-xs mt-1">
+          Enter a valid phone number (7–15 digits).
+        </small>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="mb-5 relative">
+        <label class="text-sm font-semibold">Password</label>
+
+        <input id="password" type="password" placeholder="Enter your password"
+          class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary">
+
+        <button id="togglePassword" type="button"
+          class="absolute right-3 top-9 text-evTextSoft hover:text-evPrimary">
+          <i class="fa-solid fa-eye-slash"></i>
+        </button>
+
+        <small id="passwordError" class="hidden text-red-400 text-xs mt-1">
+          Password must be at least 6 characters.
+        </small>
+
+        <a href="forgot-password.html"
+          class="text-evPrimary text-sm font-medium hover:underline mt-1 block text-right">
+          Forgot Password?
+        </a>
+      </div>
+
+      <!-- LOGIN BUTTON -->
+      <button type="submit"
+        class="w-full py-2 bg-evPrimary text-evBg rounded-full font-semibold shadow-lg hover:bg-evSecondary hover:scale-[1.03] active:scale-[0.97] transition">
+        Log In
+      </button>
+    </form>
+
+    <!-- SUCCESS -->
+    <p id="successMessage" class="hidden mt-4 text-center text-emerald-300 font-semibold">
+      🎉 Login Successful!
+    </p>
+
+    <!-- FOOTER -->
+    <p class="text-center text-sm text-evTextSoft mt-4">
+      Don’t have an account?
+      <a href="signupform.html" class="text-evPrimary font-semibold hover:underline">Sign Up</a>
+    </p>
+  </div>
+
+  <!-- ===================================================== -->
+  <!-- JAVASCRIPT -->
+  <!-- ===================================================== -->
+  <script>
+    const emailTab = document.getElementById("emailTab");
+    const phoneTab = document.getElementById("phoneTab");
+
+    const emailLogin = document.getElementById("emailLogin");
+    const phoneLogin = document.getElementById("phoneLogin");
+
+    const emailInput = document.getElementById("emailInput");
+    const phoneInput = document.getElementById("phoneInput");
+    const passwordInput = document.getElementById("password");
+
+    const loginForm = document.getElementById("loginForm");
+    const successMessage = document.getElementById("successMessage");
+
+    // -----------------------
+    // SWITCH MODE (EMAIL ↔ PHONE)
+    // -----------------------
+    emailTab.addEventListener("click", () => {
+      emailTab.classList.add("bg-evPrimary", "text-evBg");
+      emailTab.classList.remove("bg-evBgSoft/50");
+
+      phoneTab.classList.remove("bg-evPrimary", "text-evBg");
+      phoneTab.classList.add("bg-evBgSoft/50", "border", "border-evPrimary");
+
+      emailLogin.classList.remove("hidden");
+      phoneLogin.classList.add("hidden");
+    });
+
+    phoneTab.addEventListener("click", () => {
+      phoneTab.classList.add("bg-evPrimary", "text-evBg");
+      phoneTab.classList.remove("bg-evBgSoft/50");
+
+      emailTab.classList.remove("bg-evPrimary", "text-evBg");
+      emailTab.classList.add("bg-evBgSoft/50", "border", "border-evPrimary");
+
+      emailLogin.classList.add("hidden");
+      phoneLogin.classList.remove("hidden");
+    });
+
+    // -----------------------
+    // VALIDATION
+    // -----------------------
+    function validateEmail() {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+      document.getElementById("emailError").classList.toggle("hidden", ok);
+      return ok;
+    }
+
+    function validatePhone() {
+      const ok = /^[0-9]{7,15}$/.test(phoneInput.value.trim());
+      document.getElementById("phoneError").classList.toggle("hidden", ok);
+      return ok;
+    }
+
+    function validatePassword() {
+      const ok = passwordInput.value.trim().length >= 6;
+      document.getElementById("passwordError").classList.toggle("hidden", ok);
+      return ok;
+    }
+
+    // Toggle password visibility
+    togglePassword.addEventListener("click", () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      togglePassword.innerHTML =
+        type === "password"
+          ? '<i class="fa-solid fa-eye-slash"></i>'
+          : '<i class="fa-solid fa-eye"></i>';
+    });
+
+    // -----------------------
+    // FORM SUBMIT
+    // -----------------------
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      let valid = validatePassword();
+
+      if (!emailLogin.classList.contains("hidden")) {
+        valid = validateEmail() && valid;
+      } else {
+        valid = validatePhone() && valid;
+      }
+
+      if (valid) {
+        successMessage.classList.remove("hidden");
+        loginForm.reset();
+      } else {
+        successMessage.classList.add("hidden");
+      }
+    });
+  </script>
+
+</body>
+</html>

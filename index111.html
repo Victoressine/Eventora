@@ -395,3 +395,762 @@
 
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventora – Create Event</title>
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="image/eventora-logo.png" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Colors Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            evPrimary: "#facc15",
+            evSecondary: "#16a34a",
+            evAccent: "#0ea5e9",
+            evBg: "#15803d",
+            evBgSoft: "#166534",
+            evCard: "#14532d",
+            evText: "#ffffff",
+            evTextSoft: "#d1d5db",
+            evBorder: "#111827",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+</head>
+
+<body class="bg-evBg text-evText antialiased min-h-screen flex flex-col">
+
+  <!-- ========================================================= -->
+  <!-- SIMPLE EVENTORA NAVBAR (TOP) -->
+  <!-- ========================================================= -->
+  <header class="sticky top-0 z-40 bg-evBgSoft/80 backdrop-blur border-b border-evBorder">
+    <div class="max-w-[90rem] mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-3">
+        <div
+          class="h-12 w-12 rounded-xl bg-gradient-to-br from-evPrimary via-evSecondary to-evAccent flex items-center justify-center shadow overflow-hidden">
+          <img src="image/eventora-logo.png" alt="Eventora Logo" class="h-12 w-12 object-contain" />
+        </div>
+        <span class="font-semibold text-xl">Eventora</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-evTextSoft">
+        <a href="index.html" class="hover:text-evPrimary">Home</a>
+        <a href="events.html" class="hover:text-evPrimary">Browse Events</a>
+        <a href="create.html" class="text-evPrimary font-semibold">Create Event</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- CREATE EVENT – MULTI-STEP FORM CONTAINER -->
+  <!-- ========================================================= -->
+  <main class="flex-1 flex items-center justify-center px-4 py-10 sm:py-16">
+    <div
+      class="w-full max-w-3xl bg-evCard/80 border border-evBorder rounded-2xl shadow-2xl backdrop-blur-xl p-6 sm:p-8">
+
+      <!-- Title -->
+      <div class="mb-6 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-evTextSoft mb-2">
+          Eventora Creator
+        </p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Create a New Event
+        </h1>
+        <p class="mt-2 text-xs sm:text-sm text-evTextSoft">
+          Fill in the details below to publish your event on Eventora.
+        </p>
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- STEP INDICATOR (TOP) -->
+      <!-- ===================================================== -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between text-xs sm:text-sm font-medium">
+          <div class="flex-1 flex items-center gap-2">
+            <div id="stepDot1"
+                 class="flex items-center justify-center w-7 h-7 rounded-full border border-evPrimary bg-evPrimary text-evBg text-xs font-bold">
+              1
+            </div>
+            <span class="text-evTextSoft">Event Details</span>
+          </div>
+
+          <div class="flex-1 flex items-center gap-2 justify-center">
+            <div class="h-[2px] flex-1 bg-evBorder relative">
+              <div id="stepBar12" class="absolute inset-0 bg-evPrimary w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <div class="flex-1 flex items-center gap-2 justify-center">
+            <div id="stepDot2"
+                 class="flex items-center justify-center w-7 h-7 rounded-full border border-evTextSoft text-evTextSoft text-xs font-bold">
+              2
+            </div>
+            <span class="text-evTextSoft hidden sm:inline-block">Media & Description</span>
+          </div>
+
+          <div class="flex-1 flex items-center gap-2 justify-center">
+            <div class="h-[2px] flex-1 bg-evBorder relative">
+              <div id="stepBar23" class="absolute inset-0 bg-evPrimary w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <div class="flex-1 flex items-center gap-2 justify-end">
+            <div id="stepDot3"
+                 class="flex items-center justify-center w-7 h-7 rounded-full border border-evTextSoft text-evTextSoft text-xs font-bold">
+              3
+            </div>
+            <span class="text-evTextSoft hidden sm:inline-block">Tickets & Publish</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- MULTI-STEP FORM -->
+      <!-- ===================================================== -->
+      <form id="createEventForm" novalidate>
+        <!-- Sliding wrapper (Option A: horizontal slide) -->
+        <div id="stepsWrapper"
+             class="flex transition-transform duration-500 ease-out w-[300%]">
+
+          <!-- ========================= -->
+          <!-- STEP 1: EVENT DETAILS    -->
+          <!-- ========================= -->
+          <div class="w-full pr-0 sm:pr-4 flex-shrink-0">
+            <h2 class="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-calendar-plus text-evPrimary"></i>
+              Event Details
+            </h2>
+
+            <!-- Event Title -->
+            <div class="mb-4">
+              <label for="eventTitle" class="block mb-1 text-sm font-semibold">Event Title</label>
+              <input id="eventTitle" type="text"
+                     placeholder="eg. Afrobeat Night at Osu"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <small id="eventTitleError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Please enter at least 5 characters for the event title.
+              </small>
+            </div>
+
+            <!-- Organizer Name -->
+            <div class="mb-4">
+              <label for="organizerName" class="block mb-1 text-sm font-semibold">Organizer Name</label>
+              <input id="organizerName" type="text"
+                     placeholder="eg. LuminJoy Events"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <small id="organizerNameError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Organizer name is required.
+              </small>
+            </div>
+
+            <!-- Category / Location (2 cols on md+) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="category" class="block mb-1 text-sm font-semibold">Category</label>
+                <select id="category"
+                        class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary">
+                  <option value="">Select category</option>
+                  <option>Music Concerts</option>
+                  <option>Nightlife</option>
+                  <option>Holiday</option>
+                  <option>Beach Events</option>
+                  <option>Food & Drinks</option>
+                  <option>Conferences</option>
+                  <option>Workshops</option>
+                  <option>Sports & Fitness</option>
+                </select>
+                <small id="categoryError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please select a category.
+                </small>
+              </div>
+
+              <div>
+                <label for="city" class="block mb-1 text-sm font-semibold">City / Region</label>
+                <select id="city"
+                        class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary">
+                  <option value="">Select location</option>
+                  <option>Accra</option>
+                  <option>Kumasi</option>
+                  <option>Cape Coast</option>
+                  <option>Takoradi</option>
+                  <option>Tamale</option>
+                  <option>Ho</option>
+                  <option>Sunyani</option>
+                </select>
+                <small id="cityError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please select a city or region.
+                </small>
+              </div>
+            </div>
+
+            <!-- Venue -->
+            <div class="mb-4">
+              <label for="venue" class="block mb-1 text-sm font-semibold">Venue</label>
+              <input id="venue" type="text"
+                     placeholder="eg. Bloom Bar, Osu – Accra"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <small id="venueError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Venue is required.
+              </small>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="startDate" class="block mb-1 text-sm font-semibold">Start Date</label>
+                <input id="startDate" type="date"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="startDateError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please select a start date.
+                </small>
+              </div>
+
+              <div>
+                <label for="startTime" class="block mb-1 text-sm font-semibold">Start Time</label>
+                <input id="startTime" type="time"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="startTimeError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please select a start time.
+                </small>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-2">
+              <label for="description" class="block mb-1 text-sm font-semibold">
+                Short Description
+              </label>
+              <textarea id="description" rows="3"
+                        placeholder="Give attendees a brief idea of what to expect..."
+                        class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm resize-y focus:outline-none focus:ring-2 focus:ring-evPrimary"></textarea>
+              <small id="descriptionError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Description must be at least 20 characters.
+              </small>
+            </div>
+          </div>
+
+          <!-- ========================= -->
+          <!-- STEP 2: MEDIA & DESCRIPTION -->
+          <!-- ========================= -->
+          <div class="w-full px-0 sm:px-2 flex-shrink-0">
+            <h2 class="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-image text-evPrimary"></i>
+              Media & Additional Details
+            </h2>
+
+            <!-- Cover Image URL -->
+            <div class="mb-4">
+              <label for="coverImage" class="block mb-1 text-sm font-semibold">Cover Image URL</label>
+              <input id="coverImage" type="url"
+                     placeholder="Paste a direct image URL (eg. https://...)"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <small id="coverImageError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Please provide a valid cover image URL (https://...).
+              </small>
+            </div>
+
+            <!-- Gallery URLs -->
+            <div class="mb-4">
+              <label for="gallery" class="block mb-1 text-sm font-semibold">
+                Gallery Image URLs <span class="text-evTextSoft text-xs">(optional)</span>
+              </label>
+              <textarea id="gallery" rows="3"
+                        placeholder="Add multiple URLs separated by commas or each on a new line."
+                        class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm resize-y focus:outline-none focus:ring-2 focus:ring-evPrimary"></textarea>
+            </div>
+
+            <!-- Detailed Description -->
+            <div class="mb-4">
+              <label for="fullDescription" class="block mb-1 text-sm font-semibold">
+                Full Event Description <span class="text-evTextSoft text-xs">(optional)</span>
+              </label>
+              <textarea id="fullDescription" rows="5"
+                        placeholder="Describe the experience, lineup, schedule, dress code, age restrictions, etc."
+                        class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm resize-y focus:outline-none focus:ring-2 focus:ring-evPrimary"></textarea>
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-2">
+              <label for="tags" class="block mb-1 text-sm font-semibold">
+                Tags <span class="text-evTextSoft text-xs">(optional)</span>
+              </label>
+              <input id="tags" type="text"
+                     placeholder="eg. afrobeat, nightlife, ghana, party"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <p class="mt-1 text-[11px] text-evTextSoft">
+                Separate tags with commas to help people discover your event.
+              </p>
+            </div>
+          </div>
+
+          <!-- ========================= -->
+          <!-- STEP 3: TICKETS & PUBLISH -->
+          <!-- ========================= -->
+          <div class="w-full pl-0 sm:pl-4 flex-shrink-0">
+            <h2 class="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-ticket text-evPrimary"></i>
+              Tickets & Publishing
+            </h2>
+
+            <!-- Free / Paid -->
+            <div class="mb-4">
+              <span class="block mb-1 text-sm font-semibold">Event Type</span>
+              <div class="flex items-center gap-4 text-sm">
+                <label class="inline-flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="eventType" value="free" id="eventTypeFree"
+                         class="text-evPrimary focus:ring-evPrimary" checked />
+                  <span>Free Event</span>
+                </label>
+                <label class="inline-flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="eventType" value="paid" id="eventTypePaid"
+                         class="text-evPrimary focus:ring-evPrimary" />
+                  <span>Paid Event</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Price & Capacity -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="ticketPrice" class="block mb-1 text-sm font-semibold">
+                  Ticket Price (GHS)
+                </label>
+                <input id="ticketPrice" type="number" min="0" step="0.01"
+                       placeholder="eg. 150"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="ticketPriceError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please enter a valid price greater than 0 for paid events.
+                </small>
+              </div>
+
+              <div>
+                <label for="capacity" class="block mb-1 text-sm font-semibold">
+                  Capacity (No. of attendees)
+                </label>
+                <input id="capacity" type="number" min="1"
+                       placeholder="eg. 250"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="capacityError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please set a minimum capacity of 1.
+                </small>
+              </div>
+            </div>
+
+            <!-- RSVP / Ticket Link -->
+            <div class="mb-4">
+              <label for="rsvpLink" class="block mb-1 text-sm font-semibold">
+                RSVP / Ticket Link
+              </label>
+              <input id="rsvpLink" type="url"
+                     placeholder="eg. https://tickets.eventora.com/your-event"
+                     class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+              <small id="rsvpLinkError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                Please enter a valid RSVP / ticket link.
+              </small>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="contactEmail" class="block mb-1 text-sm font-semibold">
+                  Contact Email
+                </label>
+                <input id="contactEmail" type="email"
+                       placeholder="eg. events@eventora.com"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="contactEmailError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Please enter a valid email.
+                </small>
+              </div>
+              <div>
+                <label for="contactPhone" class="block mb-1 text-sm font-semibold">
+                  Contact Phone
+                </label>
+                <input id="contactPhone" type="tel"
+                       placeholder="eg. +233 50 000 0000"
+                       class="w-full px-3 py-2 rounded-md bg-evBgSoft/70 border border-evBorder text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+                <small id="contactPhoneError"
+                       class="mt-1 text-xs text-red-400 hidden">
+                  Phone number must be 10–15 digits.
+                </small>
+              </div>
+            </div>
+
+            <!-- Publish Toggle -->
+            <div class="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <span class="block text-sm font-semibold">Publish Event</span>
+                <p class="text-[11px] text-evTextSoft">
+                  When enabled, your event will be visible to the public on Eventora.
+                </p>
+              </div>
+              <label class="inline-flex items-center cursor-pointer">
+                <input id="publishToggle" type="checkbox" class="peer sr-only" checked />
+                <div
+                  class="relative w-11 h-6 bg-evBorder rounded-full peer-checked:bg-evSecondary transition-colors">
+                  <div
+                    class="absolute top-[3px] left-[3px] w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5">
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <!-- Terms -->
+            <div class="mb-2">
+              <label class="inline-flex items-start gap-2 text-xs cursor-pointer">
+                <input id="termsCheck" type="checkbox"
+                       class="mt-[3px] text-evPrimary focus:ring-evPrimary" />
+                <span>
+                  I agree to Eventora’s
+                  <a href="#" class="text-evPrimary underline">terms of service</a> and
+                  <a href="#" class="text-evPrimary underline">privacy policy</a>.
+                </span>
+              </label>
+              <small id="termsError"
+                     class="mt-1 text-xs text-red-400 hidden">
+                You must agree before publishing your event.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- =========================================== -->
+        <!-- STEP NAV BUTTONS + SUCCESS MESSAGE         -->
+        <!-- =========================================== -->
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <button type="button" id="prevStepBtn"
+                  class="w-full sm:w-auto px-4 py-2 rounded-full border border-evTextSoft text-sm font-medium text-evTextSoft hover:text-white hover:border-evPrimary hover:bg-evPrimary/20 transition disabled:opacity-40 disabled:cursor-not-allowed">
+            ← Back
+          </button>
+
+          <button type="button" id="nextStepBtn"
+                  class="w-full sm:w-auto px-6 py-2 rounded-full bg-evPrimary text-evBg text-sm font-semibold shadow-md hover:bg-evSecondary hover:shadow-lg transition">
+            Next Step →
+          </button>
+
+          <button type="submit" id="submitBtn"
+                  class="w-full sm:w-auto px-6 py-2 rounded-full bg-evSecondary text-evBg text-sm font-semibold shadow-md hover:bg-evPrimary hover:shadow-lg transition hidden">
+            Publish Event
+          </button>
+        </div>
+
+        <p id="successMessage"
+           class="mt-4 text-center text-sm font-semibold text-emerald-300 hidden">
+          🎉 Your event has been created successfully! You can now share your event link with your audience.
+        </p>
+      </form>
+
+      <!-- =========================================== -->
+      <!-- FOOTER: ALREADY HAVE ACCOUNT? LOG IN       -->
+      <!-- =========================================== -->
+      <div class="mt-6 text-center text-xs sm:text-sm text-evTextSoft">
+        Already have an account?
+        <a href="login.html" class="text-evPrimary font-semibold hover:underline">
+          Log in
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- MULTI-STEP JS + VALIDATION + SLIDE ANIMATION (OPTION A)   -->
+  <!-- ========================================================= -->
+  <script>
+    const stepsWrapper = document.getElementById("stepsWrapper");
+    const prevStepBtn = document.getElementById("prevStepBtn");
+    const nextStepBtn = document.getElementById("nextStepBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const successMessage = document.getElementById("successMessage");
+
+    let currentStep = 0; // 0, 1, 2
+
+    const stepDot1 = document.getElementById("stepDot1");
+    const stepDot2 = document.getElementById("stepDot2");
+    const stepDot3 = document.getElementById("stepDot3");
+    const stepBar12 = document.getElementById("stepBar12");
+    const stepBar23 = document.getElementById("stepBar23");
+
+    function slideToStep(step) {
+      stepsWrapper.style.transform = `translateX(-${step * 100}%)`;
+    }
+
+    function updateStepIndicators() {
+      // Reset
+      [stepDot1, stepDot2, stepDot3].forEach(dot => {
+        dot.classList.remove("bg-evPrimary", "text-evBg", "border-evPrimary");
+        dot.classList.add("border-evTextSoft", "text-evTextSoft");
+      });
+
+      stepBar12.style.width = currentStep >= 1 ? "100%" : "0";
+      stepBar23.style.width = currentStep >= 2 ? "100%" : "0";
+
+      // Active step
+      if (currentStep === 0) {
+        stepDot1.classList.add("bg-evPrimary", "text-evBg", "border-evPrimary");
+      } else if (currentStep === 1) {
+        stepDot2.classList.add("bg-evPrimary", "text-evBg", "border-evPrimary");
+      } else {
+        stepDot3.classList.add("bg-evPrimary", "text-evBg", "border-evPrimary");
+      }
+
+      // Buttons
+      prevStepBtn.disabled = currentStep === 0;
+      if (currentStep === 2) {
+        nextStepBtn.classList.add("hidden");
+        submitBtn.classList.remove("hidden");
+      } else {
+        nextStepBtn.classList.remove("hidden");
+        submitBtn.classList.add("hidden");
+      }
+    }
+
+    // Helper: Show / hide error
+    function showError(id, show, message) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (message) el.textContent = message;
+      el.classList.toggle("hidden", !show);
+    }
+
+    // ====================== VALIDATION ======================
+
+    function validateStep1() {
+      let valid = true;
+
+      const eventTitle = document.getElementById("eventTitle");
+      const organizerName = document.getElementById("organizerName");
+      const category = document.getElementById("category");
+      const city = document.getElementById("city");
+      const venue = document.getElementById("venue");
+      const startDate = document.getElementById("startDate");
+      const startTime = document.getElementById("startTime");
+      const description = document.getElementById("description");
+
+      if (eventTitle.value.trim().length < 5) {
+        showError("eventTitleError", true);
+        valid = false;
+      } else {
+        showError("eventTitleError", false);
+      }
+
+      if (organizerName.value.trim().length === 0) {
+        showError("organizerNameError", true);
+        valid = false;
+      } else {
+        showError("organizerNameError", false);
+      }
+
+      if (!category.value) {
+        showError("categoryError", true);
+        valid = false;
+      } else {
+        showError("categoryError", false);
+      }
+
+      if (!city.value) {
+        showError("cityError", true);
+        valid = false;
+      } else {
+        showError("cityError", false);
+      }
+
+      if (venue.value.trim().length === 0) {
+        showError("venueError", true);
+        valid = false;
+      } else {
+        showError("venueError", false);
+      }
+
+      if (!startDate.value) {
+        showError("startDateError", true);
+        valid = false;
+      } else {
+        showError("startDateError", false);
+      }
+
+      if (!startTime.value) {
+        showError("startTimeError", true);
+        valid = false;
+      } else {
+        showError("startTimeError", false);
+      }
+
+      if (description.value.trim().length < 20) {
+        showError("descriptionError", true);
+        valid = false;
+      } else {
+        showError("descriptionError", false);
+      }
+
+      return valid;
+    }
+
+    function validateStep2() {
+      let valid = true;
+
+      const coverImage = document.getElementById("coverImage");
+      const url = coverImage.value.trim();
+      if (!url || !/^https?:\/\/.+/i.test(url)) {
+        showError("coverImageError", true);
+        valid = false;
+      } else {
+        showError("coverImageError", false);
+      }
+
+      return valid;
+    }
+
+    function validateStep3() {
+      let valid = true;
+
+      const eventTypePaid = document.getElementById("eventTypePaid");
+      const ticketPrice = document.getElementById("ticketPrice");
+      const capacity = document.getElementById("capacity");
+      const rsvpLink = document.getElementById("rsvpLink");
+      const contactEmail = document.getElementById("contactEmail");
+      const contactPhone = document.getElementById("contactPhone");
+      const termsCheck = document.getElementById("termsCheck");
+
+      if (eventTypePaid.checked) {
+        const price = parseFloat(ticketPrice.value);
+        if (isNaN(price) || price <= 0) {
+          showError("ticketPriceError", true);
+          valid = false;
+        } else {
+          showError("ticketPriceError", false);
+        }
+      } else {
+        showError("ticketPriceError", false);
+      }
+
+      if (!capacity.value || parseInt(capacity.value, 10) < 1) {
+        showError("capacityError", true);
+        valid = false;
+      } else {
+        showError("capacityError", false);
+      }
+
+      const link = rsvpLink.value.trim();
+      if (!/^https?:\/\/.+/i.test(link)) {
+        showError("rsvpLinkError", true);
+        valid = false;
+      } else {
+        showError("rsvpLinkError", false);
+      }
+
+      const email = contactEmail.value.trim();
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email)) {
+        showError("contactEmailError", true);
+        valid = false;
+      } else {
+        showError("contactEmailError", false);
+      }
+
+      const phone = contactPhone.value.trim();
+      const phoneRe = /^[0-9]{10,15}$/;
+      if (!phoneRe.test(phone.replace(/\D/g, ""))) {
+        showError("contactPhoneError", true);
+        valid = false;
+      } else {
+        showError("contactPhoneError", false);
+      }
+
+      if (!termsCheck.checked) {
+        showError("termsError", true);
+        valid = false;
+      } else {
+        showError("termsError", false);
+      }
+
+      return valid;
+    }
+
+    // ====================== STEP BUTTON HANDLERS ======================
+
+    nextStepBtn.addEventListener("click", () => {
+      let ok = true;
+      if (currentStep === 0) ok = validateStep1();
+      else if (currentStep === 1) ok = validateStep2();
+
+      if (!ok) return;
+
+      if (currentStep < 2) {
+        currentStep++;
+        slideToStep(currentStep);
+        updateStepIndicators();
+      }
+    });
+
+    prevStepBtn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep--;
+        slideToStep(currentStep);
+        updateStepIndicators();
+      }
+    });
+
+    // ====================== FORM SUBMIT ======================
+
+    const form = document.getElementById("createEventForm");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ok = validateStep3();
+      if (!ok) {
+        successMessage.classList.add("hidden");
+        return;
+      }
+
+      // Successful submit behaviour
+      successMessage.classList.remove("hidden");
+      form.reset();
+      currentStep = 0;
+      slideToStep(currentStep);
+      updateStepIndicators();
+    });
+
+    // Initialize
+    updateStepIndicators();
+  </script>
+
+</body>
+
+</html>
