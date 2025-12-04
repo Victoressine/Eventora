@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventora – Discover Events in Ghana</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        evPrimary: "#facc15",
+                        evSecondary: "#16a34a",
+                        evAccent: "#0ea5e9",
+                        evBg: "#15803d",
+                        evBgSoft: "#166534",
+                        evCard: "#14532d",
+                        evText: "#ffffff",
+                        evTextSoft: "#d1d5db",
+                        evBorder: "#111827",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        @keyframes slidefade {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        .preloader-animation {
+            animation: slidefade 1.8s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-evBg text-evText antialiased">
+    <!-- ========================================================= -->
+    <!-- PRELOADER -->
+    <!-- ========================================================= -->
+    <div id="preloader" class="fixed inset-0 bg-evBgSoft flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-evPrimary rounded-full flex items-center justify-center preloader-animation">
+                <img src="image/eventora-logo.png" alt="Eventora Logo" class="h-20 w-20 object-contain" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- NAVBAR -->
+    <!-- ========================================================= -->
+    <header class="sticky top-0 z-50 bg-evBgSoft/70 backdrop-blur border-b border-evBorder h-24">
+
+        <div class="max-w-[90rem] mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer">
+                <div
+                    class="h-20 w-20 rounded-xl bg-gradient-to-br from-evPrimary via-evSecondary to-evAccent flex items-center justify-center shadow overflow-hidden">
+                    <img src="image/eventora-logo.png" alt="Eventora Logo" class="h-20 w-20 object-contain" />
+                </div>
+                <span class="font-semibold text-2xl">Eventora</span>
+            </div>
+
+            <!-- Desktop Menu (large screens only) -->
+            <div class="hidden lg:flex space-x-6 text-base font-semibold items-center text-evTextSoft">
+                <a href="#events" class="relative group hover:text-evPrimary">
+                    Browse Events
+                    <span
+                        class="absolute left-1/2 -bottom-2 flex -translate-x-1/2 space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                    </span>
+                </a>
+
+                <a href="create.html" class="relative group hover:text-evPrimary">
+                    Create Event
+                    <span
+                        class="absolute left-1/2 -bottom-2 flex -translate-x-1/2 space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                    </span>
+                </a>
+
+                <a href="help.html" class="relative group hover:text-evPrimary">
+                    Help Center
+                    <span
+                        class="absolute left-1/2 -bottom-2 flex -translate-x-1/2 space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                        <span class="w-1 h-1 bg-evPrimary rounded-full"></span>
+                    </span>
+                </a>
+
+                <!-- LOG IN (Frosted Glass Style for Mobile) -->
+                <a href="login.html"
+                    class="inline-block px-7 py-2 rounded-full text-sm font-semibold bg-white/10 border border-white/20 backdrop-blur-xl text-evPrimary shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.25)] hover:bg-white/20 hover:scale-[1.05] active:scale-[0.95] transition-all duration-400">
+                    Log In
+                </a>
+
+                <!-- SIGN UP (Primary CTA - Gradient) -->
+                <a href="signup.html"
+                    class="relative inline-block px-7 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-evPrimary via-evSecondary to-evAccent bg-[length:200%_auto] hover:bg-[position:100%_0] transition-all duration-500 hover:scale-[1.06] active:scale-[0.96] shadow-md hover:shadow-lg">
+                    Sign Up
+                </a>
+
+                <!-- Bell -->
+                <button class="text-xl hover:text-evPrimary relative">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="absolute -top-1 -right-2 w-2 h-2 bg-evPrimary rounded-full"></span>
+                </button>
+            </div>
+
+            <!-- Mobile/Tablet Menu Button -->
+            <button id="menu-btn" class="lg:hidden text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- SIDE MENU – PHONES/TABLETS -->
+    <!-- ========================================================= -->
+    <div id="side-menu"
+        class="fixed inset-y-0 left-0 w-80 sm:w-96 md:w-[24rem] bg-evBgSoft border-r border-evBorder z-50 transform -translate-x-full transition-transform duration-300">
+
+        <div class="p-4 flex items-center justify-between">
+            <span class="text-xl font-bold text-evPrimary">Menu</span>
+
+            <!-- Bell -->
+            <button class="text-xl hover:text-evPrimary relative">
+                <i class="fa-solid fa-bell"></i>
+                <span class="absolute -top-1 -right-2 w-2.5 h-2.5 bg-evPrimary rounded-full"></span>
+            </button>
+        </div>
+
+        <nav class="px-4 space-y-3 text-lg">
+            <a href="#events"
+                class="block py-3 px-4 font-semibold rounded-lg text-evPrimary/80 hover:text-evPrimary hover:border-b transition-colors duration-200">
+                Browse Events
+            </a>
+
+            <a href="create.html"
+                class="block py-3 px-4 font-semibold text-evPrimary/80 hover:text-evPrimary hover:border-b transition-colors duration-200 rounded-lg">
+                Create Event
+            </a>
+
+            <a href="help.html"
+                class="block py-3 px-4 font-semibold text-evPrimary/80 hover:text-evPrimary hover:border-b transition-colors duration-200 rounded-lg">
+                Help
+            </a>
+
+            <!-- LOG IN (Frosted Glass Style for Mobile) -->
+            <a href="login.html"
+                class="block w-full text-center px-6 py-3 rounded-full text-base font-semibold bg-white/10 border border-white/20 backdrop-blur-xl text-evPrimary shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_28px_rgba(0,0,0,0.25)] hover:bg-white/20 hover:scale-[1.03] active:scale-[0.95] transition-all duration-400">
+                Log In
+            </a>
+
+            <!-- SIGN UP (Primary CTA - Gradient) -->
+            <a href="signup.html"
+                class="block w-full mt-3 text-center px-6 py-3 rounded-full text-base font-semibold text-white bg-gradient-to-r from-evPrimary via-evSecondary to-evAccent bg-[length:200%_auto] hover:bg-[position:100%_0] hover:scale-[1.04] active:scale-[0.95] shadow-md hover:shadow-lg transition-all duration-500">
+                Sign Up
+            </a>
+        </nav>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden"></div>
+
+    <!-- ========================================================= -->
+    <!-- JS: MENU + PRELOADER + AOS -->
+    <!-- ========================================================= -->
+    <script>
+        (function () {
+            /* ------------------------------- */
+            /* MOBILE & TABLET SIDE MENU */
+            /* ------------------------------- */
+            const menuBtn = document.getElementById("menu-btn");
+            const sideMenu = document.getElementById("side-menu");
+            const overlay = document.getElementById("overlay");
+
+            function toggleMenu() {
+                sideMenu.classList.toggle("-translate-x-full");
+                overlay.classList.toggle("hidden");
+            }
+
+            menuBtn.addEventListener("click", toggleMenu);
+            overlay.addEventListener("click", toggleMenu);
+
+            /* ------------------------------- */
+            /* PRELOADER */
+            /* ------------------------------- */
+            function hidePreloader() {
+                const pre = document.getElementById("preloader");
+                setTimeout(() => {
+                    pre.style.opacity = "0";
+                    pre.style.transition = "opacity .5s ease";
+                    setTimeout(() => {
+                        pre.style.display = "none";
+                        window.scrollTo(0, 0);
+                    }, 600);
+                }, 1800);
+            }
+
+
+            /* ------------------------------- */
+            /* AOS LOADER */
+            /* ------------------------------- */
+            function ensureAOS(callback) {
+                if (typeof AOS !== "undefined") return callback();
+
+                const s = document.createElement("script");
+                s.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+                s.onload = callback;
+                document.head.appendChild(s);
+            }
+
+            function initAOS() {
+                if (typeof AOS !== "undefined") {
+                    AOS.init({
+                        duration: 900,
+                        once: true,
+                        offset: 80,
+                    });
+                    setTimeout(() => AOS.refresh(), 50);
+                }
+            }
+
+            /* AUTO RUN AFTER PAGE LOAD */
+            window.addEventListener("load", () => {
+                hidePreloader();
+                ensureAOS(initAOS);
+            });
+        })();
+    </script>
+
+    <!-- ========================================================= -->
+<!-- HERO SECTION — PARALLAX + FADE SLIDESHOW + RESPONSIVE -->
+<!-- ========================================================= -->
+
+<section id="heroParallax"
+    class="relative overflow-hidden w-full min-h-[420px] sm:min-h-[520px] md:min-h-[620px] lg:min-h-[620px] xl:min-h-[620px] 2xl:min-h-[700px] flex items-center">
+
+    <!-- Background Slideshow -->
+    <div id="slideshow" class="absolute inset-0 -z-10">
+
+        <!-- Slide 1 -->
+        <img src="image/cape-coast-castle.jpg"
+            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-100 transition-opacity duration-[1500ms] ease-in-out" />
+
+        <!-- Slide 2 -->
+        <img src="image/elmina-coast-&-beach.jpg"
+            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+
+        <!-- Slide 3 -->
+        <img src="image/beach-events.jpg"
+            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+
+        <!-- Slide 4 -->
+        <img src="image/aqua-safari .jpg"
+            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <!-- HERO CONTENT -->
+    <div class="relative z-20 text-center px-6 max-w-3xl mx-auto">
+        <h1
+            class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight text-white drop-shadow-xl animate-fadeInUp">
+            Discover Amazing Events Across Ghana
+        </h1>
+
+        <p class="mt-4 text-sm sm:text-base md:text-lg text-gray-200 max-w-xl mx-auto animate-fadeInUp delay-200">
+            Concerts, nightlife, festivals, conferences, holidays & more.
+            Your next unforgettable experience starts here.
+        </p>
+
+        <!-- Search Bar -->
+        <div
+            class="mt-8 bg-white/10 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-xl animate-fadeInUp delay-300">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+                <!-- Search -->
+                <div class="bg-white/10 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass text-yellow-300"></i>
+                    <input
+                        class="bg-transparent w-full text-sm text-white placeholder-gray-300 focus:outline-none"
+                        placeholder="Search for events..." />
+                </div>
+
+                <!-- Location -->
+                <div class="bg-white/10 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-blue-300"></i>
+                    <select
+                        class="bg-transparent w-full text-sm text-white focus:outline-none">
+                        <option class="text-black">All Locations</option>
+                        <option class="text-black">Accra</option>
+                        <option class="text-black">Kumasi</option>
+                        <option class="text-black">Cape Coast</option>
+                        <option class="text-black">Takoradi</option>
+                    </select>
+                </div>
+
+                <!-- Date Filter -->
+                <div class="bg-white/10 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-days text-green-300"></i>
+                    <select
+                        class="bg-transparent w-full text-sm text-white focus:outline-none">
+                        <option class="text-black">Soonest</option>
+                        <option class="text-black">Latest</option>
+                        <option class="text-black">Most Popular</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================================================= -->
+<!-- HERO CSS ANIMATIONS -->
+<!-- ========================================================= -->
+<style>
+    .animate-fadeInUp {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp .9s forwards ease-out;
+    }
+
+    .delay-200 {
+        animation-delay: .2s;
+    }
+
+    .delay-300 {
+        animation-delay: .3s;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- ========================================================= -->
+<!-- PARALLAX + SLIDESHOW JS -->
+<!-- ========================================================= -->
+<script>
+(() => {
+
+    /* ========= SLIDESHOW ========= */
+    const slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    function nextSlide() {
+        slides[index].classList.remove("opacity-100");
+        slides[index].classList.add("opacity-0");
+
+        index = (index + 1) % slides.length;
+
+        slides[index].classList.remove("opacity-0");
+        slides[index].classList.add("opacity-100");
+    }
+
+    setInterval(nextSlide, 20000); // every 20 secs
+
+
+    /* ========= PARALLAX EFFECT ========= */
+    const hero = document.getElementById("heroParallax");
+    const slideshow = document.getElementById("slideshow");
+
+    let ticking = false;
+
+    function updateParallax() {
+        const rect = hero.getBoundingClientRect();
+        const isDesktop = window.innerWidth >= 1024;
+
+        const factor = isDesktop ? 0.25 : 0.08;
+        const offset = rect.top * factor;
+
+        slideshow.style.transform = `translateY(${offset}px)`;
+
+        ticking = false;
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateParallax);
+    updateParallax();
+
+})();
+</script>
+
+
+    <!-- ========================================================= -->
+    <!-- EVENTS GRID + FILTER BUTTONS (SHOW ALL 6 CARDS) -->
+    <!-- ========================================================= -->
+    <section id="events" class="max-w-[90rem] mx-auto px-4 pt-12 fade-up">
+
+        <!-- Section Header -->
+        <div class="flex justify-between items-center mb-6 border-b border-white/20 pb-2">
+
+            <h2 class="text-2xl font-bold text-white tracking-wide
+             drop-shadow-sm hover:drop-shadow-lg 
+             transition-all duration-500 hover:translate-x-[3px]">
+                Discover Categories
+            </h2>
+
+            <a href="events.html" class="text-[12px] font-semibold text-white opacity-80 
+            hover:opacity-100 hover:tracking-wide hover:underline
+            transition-all duration-500">
+                View all →
+            </a>
+
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <div class="flex flex-wrap gap-3 mb-6">
+
+            <button class="filter-btn active-filter relative inline-block 
+           px-6 py-2 rounded-full text-sm font-semibold text-white 
+           bg-gradient-to-r from-evPrimary via-evSecondary to-evAccent 
+           bg-[length:200%_auto] hover:bg-[position:100%_0] 
+           transition-all duration-500 hover:scale-[1.06] active:scale-[0.96] 
+           shadow-md hover:shadow-lg" data-filter="all">
+                All Cards
+            </button>
+
+        </div>
+
+        <!-- Responsive Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+
+            <!-- Holiday -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-gift text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Holiday</span>
+            </div>
+
+            <!-- Nightlife -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-martini-glass text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Nightlife</span>
+            </div>
+
+            <!-- Music Concerts -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-microphone text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Music Concerts</span>
+            </div>
+
+            <!-- Dates -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-heart-pulse text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Dates</span>
+            </div>
+
+            <!-- Beach Events -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-umbrella-beach text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Beach Events</span>
+            </div>
+
+            <!-- Food & Drinks -->
+            <div class="category-box flex flex-col items-center gap-2 py-4 cursor-pointer hover:scale-105 transition">
+                <div
+                    class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-utensils text-3xl sm:text-4xl text-white"></i>
+                </div>
+                <span class="text-white font-bold">Food & Drinks</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="mb-6">
+        <input id="eventSearch" type="text" placeholder="Search categories..." class="w-full px-4 py-3 rounded-xl bg-evBgSoft/60 border border-evBorder
+           placeholder-evTextSoft text-sm focus:outline-none" />
+    </div>
+
+    <!-- EVENT CARDS GRID -->
+    <div id="eventGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    <!-- ========================================================= -->
+    <!-- TAILWIND STYLES -->
+    <!-- ========================================================= -->
+    <style>
+        .filter-btn {
+            @apply px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] text-evTextSoft hover:bg-evSecondary hover:text-evBg transition;
+        }
+
+        .active-filter {
+            @apply bg-evPrimary text-evBg font-semibold;
+        }
+
+        .fade-slide {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlide 0.5s forwards;
+        }
+
+        @keyframes fadeSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+
+    <!-- ========================================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================================= -->
+    <script>
+        /* EVENT DATA (All 6 Cards Updated) */
+        const eventData = [
+            {
+                title: "Exclusive Holiday Getaway",
+                category: "Holiday",
+                location: "Ada • Aqua Safari",
+                date: "Mon, 5 Jan 2026",
+                img: "image/aqua-safari .jpg",
+                attending: 452,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-holiday.html"
+            },
+
+            {
+                title: "Accra Premium Nightlife Experience",
+                category: "Nightlife",
+                location: "Osu • Bloom Bar",
+                date: "Fri, 18 Apr 2026",
+                img: "image/Bloom Bar.jpg",
+                attending: 879,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-nightlife.html"
+            },
+
+            {
+                title: "Live Music Concert Festival",
+                category: "Music Concerts",
+                location: "Accra • Independence Square",
+                date: "Sat, 1 Mar 2026",
+                img: "image/live-music-concert-ghana.jpg",
+                attending: 1340,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-music-concert.html"
+            },
+
+            {
+                title: "Romantic Dates & Candlelight Event",
+                category: "Dates",
+                location: "Labadi Beach Hotel",
+                date: "Thu, 14 Feb 2026",
+                img: "image/romantic-dates.jpg",
+                attending: 312,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-dates.html"
+            },
+
+            {
+                title: "Beach Events & Bonfire Festival",
+                category: "Beach Events",
+                location: "Laboma Beach",
+                date: "Sun, 22 Mar 2026",
+                img: "image/beach-events.jpg",
+                attending: 624,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-beach.html"
+            },
+
+            {
+                title: "Food & Drinks Festival Ghana",
+                category: "Food & Drinks",
+                location: "West Hills Mall",
+                date: "Sat, 10 May 2026",
+                img: "image/food-&-drinks.jpg",
+                attending: 1028,
+                rsvpLink: "https://forms.gle/your-rsvp-link",
+                detailsLink: "event-details-food-drinks.html"
+            }
+        ];
+
+        const eventGrid = document.getElementById("eventGrid");
+        let currentFilter = "all";
+
+        /* RENDER CARDS */
+        function renderEvents(events) {
+            eventGrid.innerHTML = "";
+
+            events.forEach(event => {
+                const card = document.createElement("div");
+                card.className =
+                    "fade-slide bg-evCard/70 border border-evBorder rounded-2xl overflow-hidden shadow hover:shadow-xl transition";
+
+                card.innerHTML = `
+      <div class="relative h-48 overflow-hidden">
+        <img src="${event.img}" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
+        <span class="absolute bottom-2 right-2 bg-evPrimary text-evBg px-3 py-1 text-[10px] rounded-full font-semibold">
+          ${event.category}
+        </span>
+      </div>
+
+      <div class="p-4 space-y-3">
+        <h3 class="text-sm font-bold leading-tight">${event.title}</h3>
+
+        <div class="flex items-center gap-2 text-xs text-evTextSoft">
+          <i class="fa-solid fa-location-dot text-evAccent"></i>${event.location}
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-evTextSoft">
+          <i class="fa-solid fa-calendar-days text-evSecondary"></i>${event.date}
+        </div>
+
+        <!-- attending -->
+        <div class="flex items-center gap-2 text-xs text-evTextSoft">
+          <i class="fa-solid fa-user-group text-evPrimary"></i>${event.attending} attending
+        </div>
+
+        <!-- buttons -->
+        <div class="flex items-center justify-between pt-2">
+          <a href="${event.rsvpLink}" target="_blank"
+             class="px-4 py-1.5 rounded-full bg-evPrimary text-evBg text-[11px] font-semibold hover:bg-evSecondary transition">
+             RSVP
+          </a>
+
+          <a href="${event.detailsLink}"
+             class="px-4 py-1.5 rounded-full border border-evPrimary text-evPrimary text-[11px] font-semibold hover:bg-evPrimary hover:text-evBg transition">
+             Details
+          </a>
+        </div>
+      </div>
+    `;
+                eventGrid.appendChild(card);
+            });
+        }
+
+        /* FILTER + SEARCH */
+        function filterEvents() {
+            const searchTerm = document.getElementById("eventSearch").value.toLowerCase();
+
+            const filtered = eventData.filter(e =>
+                (currentFilter === "all" || e.category === currentFilter) &&
+                (e.title.toLowerCase().includes(searchTerm) ||
+                    e.location.toLowerCase().includes(searchTerm) ||
+                    e.category.toLowerCase().includes(searchTerm))
+            );
+
+            renderEvents(filtered);
+        }
+
+        /* FILTER BUTTONS CLICK */
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active-filter"));
+                btn.classList.add("active-filter");
+                currentFilter = btn.dataset.filter;
+                filterEvents();
+            });
+        });
+
+        /* SEARCH INPUT */
+        document.getElementById("eventSearch").addEventListener("input", filterEvents);
+
+        /* CATEGORY ICONS SYNC */
+        document.querySelectorAll(".category-box").forEach(box => {
+            box.addEventListener("click", () => {
+                const category = box.querySelector("span").innerText.trim();
+
+                document.querySelectorAll(".filter-btn").forEach(btn => {
+                    btn.classList.remove("active-filter");
+                    if (btn.dataset.filter === category) btn.classList.add("active-filter");
+                });
+
+                currentFilter = category;
+                filterEvents();
+            });
+        });
+
+        /* INITIAL LOAD */
+        renderEvents(eventData);
+    </script>
+
+
+    <!-- ========================================================= -->
+    <!-- TOP DESTINATIONS IN GHANA -->
+    <!-- ========================================================= -->
+    <section class="max-w-[90rem] mx-auto px-4 mt-28 mb-16 fade-up">
+
+        <h2 class="text-3xl font-extrabold text-white mb-8 text-left">Top Destinations in Ghana</h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Kakum National Park -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/kakum-national-park.jpg" alt="Kakum National Park Ghana rainforest"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Kakum National Park
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Central Region — Ghana</p>
+                </div>
+            </div>
+
+
+            <!-- Cape Coast Castle -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/cape-coast-castle.jpg" alt="Cape Coast Castle Ghana"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Cape Coast Castle
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Central Region — Ghana</p>
+                </div>
+            </div>
+
+
+            <!-- Mole National Park -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/mole-national-park.jpg" alt="Mole National Park Ghana"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Mole National Park
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Savannah Region — Ghana</p>
+                </div>
+            </div>
+
+
+            <!-- Lake Volta -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/lake-volta.jpg" alt="Lake Volta Ghana"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Lake Volta
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Volta Region — Ghana</p>
+                </div>
+            </div>
+
+
+            <!-- Elmina Beach -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/elmina-coast-&-beach.jpg" alt="Elmina Beach Ghana"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Elmina Coast & Beach
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Central Region — Ghana</p>
+                </div>
+            </div>
+
+
+            <!-- Wli Waterfalls -->
+            <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
+    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+
+                <img src="image/wli-waterfalls-&-volta.jpg" alt="Wli Waterfalls Ghana"
+                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+
+                <div class="absolute bottom-4 left-4 md:left-5">
+                    <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
+                        Wli Waterfalls & Volta
+                    </h3>
+                    <p class="text-xs sm:text-sm text-white opacity-90">Oti Region — Ghana</p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- STYLES & OPTIONAL ANIMATION -->
+    <!-- ========================================================= -->
+    <style>
+        .fade-up-custom {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUpCustom 0.8s forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeUpCustom {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-up-custom');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.destination-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+
+    <!-- ========================================================= -->
+    <!-- FOOTER – EVENTORA -->
+    <!-- ========================================================= -->
+    <footer id="contact" class="bg-evBgSoft text-evText py-12 mt-16 relative" data-aos="fade-up">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center md:text-left">
+
+                <!-- Logo + Description -->
+                <div>
+                    <img src="image/eventora-logo.png" alt="Eventora Logo" class="w-28 mx-auto md:mx-0 mb-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-evPrimary leading-tight tracking-tight">
+                        Eventora
+                    </h3>
+                    <p class="text-evTextSoft mt-2 text-sm leading-tight">
+                        Discover, create and enjoy unforgettable events across Ghana.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Quick Links
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-evPrimary">Home</a></li>
+                        <li><a href="events.html" class="hover:text-evPrimary">Events</a></li>
+                        <li><a href="create.html" class="hover:text-evPrimary">Create Event</a></li>
+                        <li><a href="help.html" class="hover:text-evPrimary">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Contact Info
+                    </h3>
+
+                    <div class="text-sm">
+                        <a href="tel:+233501234567"
+                            class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+                            <i class="fas fa-phone-alt mr-2"></i> +233 50 000 0000
+                        </a>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="mailto:support@eventora.com"
+                            class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+                            <i class="fas fa-envelope mr-2"></i> support@eventora.com
+                        </a>
+                    </div>
+
+                    <div class="text-sm">
+                        <div class="inline-flex items-center text-evTextSoft">
+                            <i class="fas fa-map-marker-alt mr-2 text-evSecondary"></i>
+                            Airport Residential Area, Accra – Ghana
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Follow Us
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-evPrimary">Facebook</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">Instagram</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">Twitter</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">LinkedIn</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="mt-10 border-t border-evBorder pt-6 text-center text-evTextSoft text-sm">
+                &copy; <span id="currentYear"></span> Eventora — All-In-One Event Experience Platform in Ghana.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#hero" id="backToTop" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-evPrimary text-evBg px-4 py-2 rounded-full shadow-lg 
+          hover:bg-evSecondary transition-opacity duration-300 opacity-0 pointer-events-none z-50">
+        ↑
+    </a>
+
+    <!-- ========================================================= -->
+    <!-- AOS + BACK TO TOP + YEAR MERGED JS -->
+    <!-- ========================================================= -->
+
+    <script>
+        /* ----------------------------------------------------------
+           LOAD AOS (Animate On Scroll)
+        ----------------------------------------------------------- */
+        function ensureAOS(callback) {
+            if (typeof AOS !== "undefined") {
+                callback();
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+            script.onload = callback;
+            script.onerror = () => console.warn("AOS failed to load.");
+            document.body.appendChild(script);
+        }
+
+        function initAOS() {
+            if (typeof AOS !== "undefined") {
+                AOS.init({
+                    duration: 1000,    // speed
+                    once: true,        // only animate once
+                    offset: 120,       // trigger offset
+                    easing: "ease-out"
+                });
+
+                // Fix any layout shift animation issues
+                setTimeout(() => AOS.refresh(), 200);
+            }
+        }
+
+        window.addEventListener("load", function () {
+            ensureAOS(initAOS);
+        });
+
+        /* ----------------------------------------------------------
+           Auto Year for Footer
+        ----------------------------------------------------------- */
+        const yearEl = document.getElementById('currentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+
+        /* ----------------------------------------------------------
+           BACK TO TOP BUTTON
+        ----------------------------------------------------------- */
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backToTop.classList.remove("opacity-0", "pointer-events-none");
+                backToTop.classList.add("opacity-100");
+            } else {
+                backToTop.classList.add("opacity-0", "pointer-events-none");
+                backToTop.classList.remove("opacity-100");
+            }
+        });
+
+        backToTop.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+</body>
+
+</html>

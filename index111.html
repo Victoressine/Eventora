@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eventora – Discover Events in Ghana</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Updated Color Theme -->
+  <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          evPrimary: "#facc15",      /* Buttons */
+          evSecondary: "#16a34a",    /* green-600 */
+          evAccent: "#0ea5e9",       /* sea blue */
+          evBg: "#15803d",           /* Main background */
+          evBgSoft: "#166534",       /* Slightly darker green */
+          evCard: "#14532d",         /* Card background */
+          evText: "#ffffff",         /* White */
+          evTextSoft: "#d1d5db",     /* Soft gray */
+          evBorder: "#111827",       /* Gray-900 */
+        }
+      }
+    }
+  }
+  </script>
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    .fade-up { opacity:0; transform:translateY(18px); transition:all .7s ease-out; }
+    .fade-up.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+
+<body class="bg-evBg text-evText antialiased">
+
+<!-- Notifications -->
+<div id="notificationContainer"
+     class="fixed top-4 right-4 z-50 flex flex-col gap-3 max-w-xs"></div>
+
+
+<!-- ========================================================= -->
+<!-- NAVBAR (Eventbrite-style but original) -->
+<!-- ========================================================= -->
+<header class="sticky top-0 z-50 bg-evBgSoft/95 backdrop-blur border-b border-evBorder">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3 cursor-pointer">
+      <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-evPrimary via-evSecondary to-evAccent flex items-center justify-center shadow">
+        <p class="font-bold text-evBg">E</p>
+      </div>
+      <span class="font-semibold text-lg">Eventora</span>
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex items-center gap-6 text-[14px] text-evTextSoft">
+      <a href="#events" class="hover:text-evPrimary">Browse Events</a>
+      <a href="create.html" class="hover:text-evPrimary">Create Event</a>
+      <a href="help.html" class="hover:text-evPrimary">Help</a>
+      <button id="teamLoginBtn"
+        class="px-5 py-1.5 rounded-full border border-evBorder hover:border-evPrimary text-[12px]">
+        Sign In
+      </button>
+    </nav>
+
+    <!-- Mobile Toggle -->
+    <button id="mobileToggle" class="md:hidden text-xl">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav id="mobileMenu" class="hidden md:hidden bg-evBgSoft border-t border-evBorder px-4 py-4 space-y-2">
+    <a href="#events" class="block py-1">Browse Events</a>
+    <a href="create.html" class="block py-1">Create Event</a>
+    <a href="help.html" class="block py-1">Help</a>
+
+    <button id="teamLoginBtnMobile"
+      class="block w-full px-4 py-2 text-center rounded-full border border-evBorder hover:border-evPrimary">
+      Sign In
+    </button>
+  </nav>
+</header>
+
+
+<!-- ========================================================= -->
+<!-- HERO AREA (Eventbrite-style search marketplace) -->
+<!-- ========================================================= -->
+<section class="relative pt-14 pb-10 fade-up overflow-hidden w-full h-[420px] sm:h-[420px] md:h-[520px] lg:h-[520px] xl:h-520px]">
+
+  <!-- Background Slideshow with transparency -->
+  <div id="slideshow" class="absolute inset-0 -z-10">
+    <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=1600&q=80" 
+         class="w-full h-full object-cover absolute inset-0 transition-opacity duration-[1500ms] ease-in-out opacity-100">
+    <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=1600&q=80" 
+         class="w-full h-full object-cover absolute inset-0 transition-opacity duration-[1500ms] ease-in-out opacity-0">
+    <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=1600&q=80" 
+         class="w-full h-full object-cover absolute inset-0 transition-opacity duration-[1500ms] ease-in-out opacity-0">
+    
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <div class="max-w-4xl mx-auto text-center px-4 relative z-10">
+
+    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-evText">
+      Discover Amazing Events Across Ghana
+    </h1>
+
+    <p class="mt-3 text-evTextSoft text-[14px] max-w-xl mx-auto">
+      Find concerts, conferences, workshops, meetups and more.  
+      Your next unforgettable experience starts here.
+    </p>
+
+    <!-- Search Bar -->
+    <div class="mt-8 bg-evCard/50 p-4 rounded-2xl shadow-xl border border-evBorder">
+      <div class="grid md:grid-cols-3 gap-3">
+
+        <!-- Search -->
+        <div class="bg-evBgSoft/60 border border-evBorder rounded-xl px-3 py-2 flex items-center gap-2">
+          <i class="fa-solid fa-magnifying-glass text-evPrimary"></i>
+          <input id="searchInput"
+                 class="bg-transparent w-full text-sm placeholder-evTextSoft focus:outline-none"
+                 placeholder="Search for events"/>
+        </div>
+
+        <!-- Location -->
+        <div class="bg-evBgSoft/60 border border-evBorder rounded-xl px-3 py-2 flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-evAccent"></i>
+          <select id="cityFilter"
+                  class="bg-transparent w-full text-sm focus:outline-none">
+            <option value="all">All Locations</option>
+            <option>Accra</option>
+            <option>Kumasi</option>
+            <option>Cape Coast</option>
+            <option>Takoradi</option>
+            <option>Tamale</option>
+          </select>
+        </div>
+
+        <!-- Date Filter -->
+        <div class="bg-evBgSoft/60 border border-evBorder rounded-xl px-3 py-2 flex items-center gap-2">
+          <i class="fa-solid fa-calendar-days text-evSecondary"></i>
+          <select id="sortSelect"
+                  class="bg-transparent w-full text-sm focus:outline-none">
+            <option value="date_asc">Soonest</option>
+            <option value="date_desc">Latest</option>
+            <option value="attendees_desc">Most Popular</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS for slideshow -->
+  <script>
+    let index = 0;
+    const slides = document.querySelectorAll("#slideshow img");
+
+    setInterval(() => {
+      slides[index].classList.remove("opacity-100");
+      slides[index].classList.add("opacity-0");
+
+      index = (index + 1) % slides.length;
+
+      slides[index].classList.remove("opacity-0");
+      slides[index].classList.add("opacity-100");
+    }, 4000);
+  </script>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- CATEGORIES (Eventbrite-like chips) -->
+<!-- ========================================================= -->
+<section class="max-w-6xl mx-auto mt-10 fade-up px-4">
+  <h2 class="font-semibold text-xl mb-3">Trending Categories</h2>
+
+  <div class="flex flex-wrap gap-3">
+
+    <span class="px-4 py-1.5 rounded-full bg-evPrimary text-evBg text-[12px] font-semibold cursor-pointer">Music</span>
+
+    <span class="px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] cursor-pointer hover:bg-evSecondary hover:text-evBg">Tech</span>
+
+    <span class="px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] cursor-pointer hover:bg-evSecondary hover:text-evBg">Business</span>
+
+    <span class="px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] cursor-pointer hover:bg-evSecondary hover:text-evBg">Food & Drink</span>
+
+    <span class="px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] cursor-pointer hover:bg-evSecondary hover:text-evBg">Health</span>
+
+    <span class="px-4 py-1.5 rounded-full bg-evBgSoft border border-evBorder text-[12px] cursor-pointer hover:bg-evSecondary hover:text-evBg">Arts & Culture</span>
+
+  </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- EVENTS GRID (Premium Marketplace) -->
+<!-- ========================================================= -->
+<section id="events" class="max-w-7xl mx-auto px-4 pt-12 fade-up">
+
+  <div class="flex justify-between items-end mb-4">
+    <h2 class="text-xl font-semibold">Upcoming Events</h2>
+
+    <a href="events.html" class="text-[12px] text-evAccent hover:underline">View all</a>
+  </div>
+
+  <!-- Where cards will load -->
+  <div id="eventList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- FOR ORGANIZERS SECTION -->
+<!-- ========================================================= -->
+<section class="max-w-6xl mx-auto px-4 mt-20 fade-up">
+
+  <h2 class="text-xl font-semibold mb-5">For Event Organizers</h2>
+
+  <div class="grid md:grid-cols-2 gap-6">
+
+    <!-- Team -->
+    <div class="bg-evCard p-5 rounded-2xl border border-evBorder">
+      <h3 class="font-semibold flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-users text-evSecondary"></i>
+        Team Collaboration
+      </h3>
+      <p class="mt-2 text-[12px] text-evTextSoft">
+        Manage tasks, progress and communication in one place.
+      </p>
+      <button id="teamLoginBtn2"
+        class="mt-3 px-4 py-1.5 text-[12px] rounded-full border border-evBorder hover:border-evPrimary">
+        Go to Workspace
+      </button>
+    </div>
+
+    <!-- Sponsors -->
+    <div class="bg-evCard p-5 rounded-2xl border border-evBorder">
+      <h3 class="font-semibold flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-hand-holding-dollar text-evPrimary"></i>
+        Sponsorship & Fundraising
+      </h3>
+      <p class="mt-2 text-[12px] text-evTextSoft">
+        Track sponsors, contributions and tiers.
+      </p>
+      <a href="sponsors.html"
+        class="inline-block mt-3 px-4 py-1.5 rounded-full bg-evPrimary text-evBg text-[12px]">
+        Open Sponsorship Dashboard
+      </a>
+    </div>
+
+    <!-- Feedback -->
+    <div class="bg-evCard p-5 rounded-2xl border border-evBorder">
+      <h3 class="font-semibold flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-comment-dots text-evAccent"></i>
+        Feedback Collection
+      </h3>
+      <p class="mt-2 text-[12px] text-evTextSoft">
+        Collect ratings, suggestions and post-event reviews.
+      </p>
+      <a href="feedback.html"
+        class="inline-block mt-3 px-4 py-1.5 rounded-full border border-evBorder text-[12px]">
+        Open Feedback Tools
+      </a>
+    </div>
+
+    <!-- Analytics -->
+    <div class="bg-evCard p-5 rounded-2xl border border-evBorder">
+      <h3 class="font-semibold flex items-center gap-2 text-sm">
+        <i class="fa-solid fa-chart-line text-evSecondary"></i>
+        Analytics & Archive
+      </h3>
+      <p class="mt-2 text-[12px] text-evTextSoft">
+        Attendance, revenue, sponsor and performance stats.
+      </p>
+      <a href="analytics.html"
+        class="inline-block mt-3 px-4 py-1.5 rounded-full bg-evSecondary text-evBg text-[12px]">
+        View Analytics Dashboard
+      </a>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="text-center mt-20 py-8 border-t border-evBorder text-[12px] text-evTextSoft">
+  © 2025 Eventora — All-In-One Event Experience Platform for Ghana
+</footer>
+
+
+<!-- ========================================================= -->
+<!-- JS (Your Original Logic – unchanged except for selectors) -->
+<!-- ========================================================= -->
+<script>
+  const events = [
+    { id:1, name:"Accra Tech Summit", city:"Accra", category:"Conference", date:"2025-12-20", attendees:210, capacity:400 },
+    { id:2, name:"Kumasi Music Night", city:"Kumasi", category:"Concert", date:"2026-01-05", attendees:500, capacity:800 },
+    { id:3, name:"Startups Forum", city:"Accra", category:"Meetup", date:"2026-01-15", attendees:120, capacity:200 },
+    { id:4, name:"Digital Workshop", city:"Takoradi", category:"Workshop", date:"2025-12-18", attendees:80, capacity:150 },
+    { id:5, name:"Cape Coast Cultural Fest", city:"Cape Coast", category:"Concert", date:"2026-02-03", attendees:300, capacity:500 },
+    { id:6, name:"Northern Startup Meetup", city:"Tamale", category:"Meetup", date:"2026-01-25", attendees:60, capacity:120 },
+  ];
+
+  const searchInput = document.getElementById("searchInput");
+  const cityFilter = document.getElementById("cityFilter");
+  const sortSelect = document.getElementById("sortSelect");
+  const eventList = document.getElementById("eventList");
+
+  function formatDate(d){
+    return new Date(d).toLocaleDateString("en-US",{month:"short", day:"numeric", year:"numeric"});
+  }
+
+  function filterEvents(){
+    let list = events.filter(ev=>{
+      const s = (searchInput.value || "").toLowerCase();
+      const matchSearch = ev.name.toLowerCase().includes(s) || ev.city.toLowerCase().includes(s);
+      const matchCity = cityFilter.value==="all" || ev.city===cityFilter.value;
+      return matchSearch && matchCity;
+    });
+
+    if(sortSelect.value==="date_asc") list.sort((a,b)=>a.date.localeCompare(b.date));
+    if(sortSelect.value==="date_desc") list.sort((a,b)=>b.date.localeCompare(a.date));
+    if(sortSelect.value==="attendees_desc") list.sort((a,b)=>b.attendees-a.attendees);
+
+    renderEvents(list);
+  }
+
+  function renderEvents(list){
+    eventList.innerHTML="";
+    list.forEach(ev=>{
+      const el=document.createElement("div");
+      el.className="bg-evCard border border-evBorder rounded-2xl p-4 hover:border-evPrimary transition";
+
+      el.innerHTML=`
+        <img src="https://picsum.photos/600/300?random=${ev.id}" 
+             class="rounded-xl mb-4 w-full h-40 object-cover">
+
+        <p class="text-lg font-semibold">${ev.name}</p>
+
+        <p class="text-[12px] text-evTextSoft mt-1">
+          <i class="fa-solid fa-location-dot text-evAccent mr-1"></i>${ev.city}
+        </p>
+
+        <p class="text-[12px] text-evTextSoft mt-1">
+          <i class="fa-regular fa-calendar text-evSecondary mr-1"></i>${formatDate(ev.date)}
+        </p>
+
+        <p class="text-[12px] text-evTextSoft mt-1">
+          <span class="text-evPrimary font-semibold">${ev.attendees}</span> / ${ev.capacity} attending
+        </p>
+
+        <div class="mt-3 flex justify-between items-center">
+          <button class="px-3 py-1 rounded-full text-[12px] bg-evPrimary text-evBg font-semibold">
+            RSVP
+          </button>
+          <a href="event-details.html" class="text-[12px] text-evAccent hover:underline">Details</a>
+        </div>
+      `;
+
+      eventList.appendChild(el);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    filterEvents();
+    [searchInput, cityFilter, sortSelect].forEach(el=>{
+      el.addEventListener("input", filterEvents);
+    });
+
+    document.querySelectorAll(".fade-up").forEach((el,i)=>{
+      setTimeout(()=>el.classList.add("show"),100*i);
+    });
+
+    document.getElementById("mobileToggle").addEventListener("click",()=>{
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+  });
+</script>
+
+</body>
+</html>
