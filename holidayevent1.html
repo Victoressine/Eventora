@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventora – Organizer Dashboard</title>
+
+    <!-- Favicon / Logo -->
+    <link rel="icon" type="image/png" href="image/eventora-logo.png" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        evPrimary: "#facc15",
+                        evSecondary: "#16a34a",
+                        evAccent: "#0ea5e9",
+                        evBg: "#15803d",
+                        evBgSoft: "#166534",
+                        evCard: "#14532d",
+                        evText: "#ffffff",
+                        evTextSoft: "#d1d5db",
+                        evBorder: "#111827",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        @keyframes slidefade {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        .preloader-animation {
+            animation: slidefade 1.8s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-evBg text-evText antialiased">
+    <!-- ========================================================= -->
+    <!-- PRELOADER -->
+    <!-- ========================================================= -->
+    <div id="preloader" class="fixed inset-0 bg-evBgSoft flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-evPrimary rounded-full flex items-center justify-center preloader-animation">
+                <img src="image/eventora-logo.png" alt="Eventora Logo" class="h-20 w-20 object-contain" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- HEADER -->
+    <!-- ============================================== -->
+    <header class="bg-evBgSoft/70 backdrop-blur border-b border-evBorder">
+        <div class="max-w-[90rem] mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="image/eventora-logo.png" class="h-14 w-14 rounded-lg shadow" alt="Eventora Logo" />
+                <div>
+                    <h1 class="text-2xl font-bold">Eventora</h1>
+                </div>
+            </div>
+
+            <a href="index.html"
+                class="px-5 py-2 rounded-full bg-evPrimary text-evBg font-semibold hover:bg-evSecondary transition">
+                Back to Events
+            </a>
+        </div>
+    </header>
+
+    <!-- ============================================== -->
+    <!-- MAIN LAYOUT: SIDEBAR + CONTENT -->
+    <!-- ============================================== -->
+    <main class="flex-1 w-full">
+        <div class="max-w-[98rem] mx-auto w-full flex flex-col md:flex-row">
+
+            <!-- SIDEBAR TABS (visible on md and above) -->
+            <aside
+                class="hidden md:block w-64 flex-shrink-0 border-r border-evBorder bg-evBgSoft/70 min-h-[calc(100vh-4.5rem)]">
+                <nav class="p-4 space-y-1 text-sm">
+                    <p class="text-evTextSoft text-xs mb-2 uppercase tracking-wide">
+                        Event Dashboard
+                    </p>
+
+                    <button
+                        class="tab-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg bg-evCard text-evPrimary font-semibold"
+                        data-tab="tab-event-details">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span>Event Details</span>
+                    </button>
+
+                    <button class="tab-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-evCard/70"
+                        data-tab="tab-team">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Team Collaboration</span>
+                    </button>
+
+                    <button class="tab-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-evCard/70"
+                        data-tab="tab-sponsorship">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        <span>Sponsorship & Fundraising</span>
+                    </button>
+
+                    <button class="tab-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-evCard/70"
+                        data-tab="tab-feedback">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>Feedback Collection</span>
+                    </button>
+
+                    <button class="tab-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-evCard/70"
+                        data-tab="tab-analytics">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Analytics & Archive</span>
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- MOBILE TABS DROPDOWN (visible only on phone) -->
+            <div class="md:hidden w-full border-b border-evBorder bg-evBgSoft/60">
+                <div class="w-full px-4 py-3">
+                    <label class="text-xs text-evTextSoft block mb-1">Select Dashboard View</label>
+                    <select id="mobileTabSelect"
+                        class="w-full bg-evCard border border-evBorder rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary">
+                        <option value="tab-event-details">Event Details</option>
+                        <option value="tab-team">Team Collaboration</option>
+                        <option value="tab-sponsorship">Sponsorship & Fundraising</option>
+                        <option value="tab-feedback">Feedback Collection</option>
+                        <option value="tab-analytics">Analytics & Archive</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- MAIN CONTENT AREA -->
+            <section class="flex-1 min-w-0 overflow-y-auto px-4 md:px-6 py-6 space-y-10">
+
+                <!-- ============================================== -->
+                <!-- TAB A: EVENT DETAILS (PRIMARY) -->
+                <!-- ============================================== -->
+                <div id="tab-event-details" class="tab-panel space-y-10">
+
+                    <!-- EVENT HERO (inside dashboard, full-width card) -->
+                    <section
+                        class="relative w-full h-[260px] sm:h-[300px] md:h-[340px] lg:h-[380px] overflow-hidden rounded-2xl border border-evBorder shadow-lg">
+                        <img src="image/aqua-safari .jpg" class="absolute inset-0 w-full h-full object-cover opacity-90"
+                            alt="Event Cover" />
+
+                        <div class="absolute inset-0 bg-black/40"></div>
+
+                        <div class="relative z-10 px-6 md:px-8 h-full flex flex-col justify-end pb-8">
+                            <h1 class="text-3xl sm:text-4xl font-extrabold drop-shadow-lg">
+                                Exclusive Holiday Getaway
+                            </h1>
+
+                            <!-- STAR RATING SECTION -->
+                            <div class="flex items-center gap-2 mt-3">
+                                <div id="starRating" class="flex text-xl cursor-pointer select-none">
+                                    <i class="fa-solid fa-star text-evPrimary" data-star="1"></i>
+                                    <i class="fa-solid fa-star text-evPrimary" data-star="2"></i>
+                                    <i class="fa-solid fa-star text-evPrimary" data-star="3"></i>
+                                    <i class="fa-solid fa-star text-evPrimary" data-star="4"></i>
+                                    <i class="fa-solid fa-star text-gray-500" data-star="5"></i>
+                                </div>
+                                <span id="ratingValue" class="text-sm text-evTextSoft">
+                                    4.8 (132 reviews)
+                                </span>
+                            </div>
+
+                            <p class="mt-3 text-sm md:text-base text-evTextSoft flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-evPrimary"></i> Ada • Aqua Safari
+                            </p>
+
+                            <p class="text-evTextSoft mt-1 text-xs md:text-sm">
+                                <i class="fa-solid fa-calendar-days text-evSecondary"></i> Mon, 5 Jan 2026
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- EVENT DETAILS + SIDEBAR -->
+                    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 min-w-0">
+
+                        <!-- LEFT COLUMN -->
+                        <div class="lg:col-span-2 space-y-6">
+
+                            <!-- Event Overview -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Event Overview</h2>
+                                <p class="text-evTextSoft leading-relaxed">
+                                    Enjoy an unforgettable holiday experience at Aqua Safari.
+                                    Relax, explore, network, and have fun with premium activities,
+                                    live music, food, and beautiful scenery.
+                                </p>
+                            </div>
+
+                            <!-- Lineup / Activities -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Lineup / Activities</h2>
+                                <ul class="list-disc ml-6 text-evTextSoft space-y-2">
+                                    <li>Boat Cruise</li>
+                                    <li>Beach Games & Activities</li>
+                                    <li>Live Music & DJ</li>
+                                    <li>Exclusive Poolside Party</li>
+                                    <li>Photo Sessions</li>
+                                </ul>
+                            </div>
+
+                            <!-- What to Expect -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">What to Expect</h2>
+                                <ul class="list-disc ml-6 text-evTextSoft space-y-2">
+                                    <li>Clean and safe environment</li>
+                                    <li>Premium hospitality</li>
+                                    <li>A fun and exciting social experience</li>
+                                    <li>Networking opportunities</li>
+                                </ul>
+                            </div>
+
+                            <!-- Dress Code -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Dress Code</h2>
+                                <p class="text-evTextSoft">Tropical, colorful, classy beachwear.</p>
+                            </div>
+
+                            <!-- Parking / Entry -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Parking & Entry Instructions</h2>
+                                <p class="text-evTextSoft">
+                                    Free parking available at the venue. Gate opens at 10 AM.
+                                    Please show your digital ticket at the entrance.
+                                </p>
+                            </div>
+
+                            <!-- Refund Policy -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Refund Policy</h2>
+                                <p class="text-evTextSoft">
+                                    Tickets are non-refundable. If event is cancelled,
+                                    refunds will be issued within 7 working days.
+                                </p>
+                            </div>
+
+                            <!-- Safety Guidelines -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h2 class="text-2xl font-bold mb-3">Safety Guidelines</h2>
+                                <ul class="list-disc ml-6 text-evTextSoft space-y-2">
+                                    <li>No dangerous objects allowed</li>
+                                    <li>Security checks at the entrance</li>
+                                    <li>Follow all staff instructions</li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT SIDEBAR -->
+                        <aside class="space-y-6">
+
+                            <!-- Ticket Card -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h3 class="text-xl font-bold mb-3">Tickets</h3>
+                                <p class="text-evTextSoft mb-3">GH₵ 150 per ticket</p>
+
+                                <!-- Quantity Selector -->
+                                <div class="mb-4">
+                                    <label class="text-sm block mb-1">Select Quantity</label>
+                                    <select id="ticketQuantity" class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm
+                                 focus:ring-2 focus:ring-evPrimary focus:outline-none">
+                                        <option value="1">1 Ticket</option>
+                                        <option value="2">2 Tickets</option>
+                                        <option value="3">3 Tickets</option>
+                                        <option value="4">4 Tickets</option>
+                                        <option value="5">5 Tickets</option>
+                                        <option value="6">6 Tickets</option>
+                                    </select>
+                                </div>
+
+                                <p id="totalPrice" class="font-semibold text-evPrimary mb-4">
+                                    Total: GH₵ 150
+                                </p>
+
+                                <a id="buyButton" href="https://forms.gle/your-rsvp-link" target="_blank" class="block w-full text-center py-2 rounded-full bg-evPrimary text-evBg 
+                          font-semibold hover:bg-evSecondary transition">
+                                    Buy Ticket(s)
+                                </a>
+                            </div>
+
+                            <!-- Organizer Card -->
+                            <div class="bg-evCard/60 border border-evBorder p-6 rounded-2xl shadow-lg">
+                                <h3 class="text-xl font-bold mb-3">Organizer</h3>
+
+                                <p class="text-evTextSoft">Eventora Experiences</p>
+
+                                <a href="mailto:organizer@example.com"
+                                    class="text-evPrimary text-sm block mt-2 hover:underline">
+                                    organizer@example.com
+                                </a>
+
+                                <a href="tel:+233501234567"
+                                    class="text-sm text-evTextSoft block mt-3 flex items-center gap-2 hover:text-evPrimary">
+                                    <i class="fa-solid fa-phone text-evPrimary"></i>
+                                    +233 50 000 0000
+                                </a>
+
+                                <a href="https://wa.me/233501234567" target="_blank"
+                                    class="mt-3 inline-flex items-center gap-2 bg-green-600 px-4 py-2 rounded-full text-sm font-semibold text-white hover:bg-green-700 transition">
+                                    <i class="fa-brands fa-whatsapp text-white"></i>
+                                    Chat on WhatsApp
+                                </a>
+                            </div>
+
+                        </aside>
+                    </section>
+
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB B: TEAM COLLABORATION -->
+                <!-- ============================================== -->
+                <div id="tab-team" class="tab-panel hidden space-y-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-users text-evPrimary"></i>
+                        Team Collaboration Workspace
+                    </h2>
+
+                    <p class="text-evTextSoft text-sm">
+                        Manage tasks, progress and communication for this event in one place.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Column: To Do -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <h3 class="font-semibold text-sm mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                                To Do
+                            </h3>
+                            <ul class="space-y-2 text-xs text-evTextSoft">
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Confirm DJ & band contracts
+                                </li>
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Finalize transport for guests
+                                </li>
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Update event FAQ page
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Column: In Progress -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <h3 class="font-semibold text-sm mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-evPrimary"></span>
+                                In Progress
+                            </h3>
+                            <ul class="space-y-2 text-xs text-evTextSoft">
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Sponsorship outreach
+                                </li>
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Vendor menu confirmation
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Column: Done -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <h3 class="font-semibold text-sm mb-3 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                Completed
+                            </h3>
+                            <ul class="space-y-2 text-xs text-evTextSoft">
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Venue booking confirmed
+                                </li>
+                                <li class="bg-evBgSoft/60 rounded-lg px-3 py-2">
+                                    Ticketing page created
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-evCard/70 border border-evBorder rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <p class="text-xs text-evTextSoft">
+                            Invite your team members to this workspace to assign tasks, comment and track updates in
+                            real-time.
+                        </p>
+                        <button
+                            class="px-5 py-2 rounded-full bg-evPrimary text-evBg text-sm font-semibold hover:bg-evSecondary transition">
+                            Go to Workspace
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB C: SPONSORSHIP & FUNDRAISING -->
+                <!-- ============================================== -->
+                <div id="tab-sponsorship" class="tab-panel hidden space-y-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-hand-holding-dollar text-evSecondary"></i>
+                        Sponsorship & Fundraising
+                    </h2>
+
+                    <p class="text-evTextSoft text-sm">
+                        Track sponsors, contributions and sponsorship tiers for this event.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Total raised -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft">Total Raised</p>
+                            <p class="text-2xl font-bold mt-1">GH₵ 48,500</p>
+                        </div>
+
+                        <!-- Sponsors count -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft">Active Sponsors</p>
+                            <p class="text-2xl font-bold mt-1">12</p>
+                        </div>
+
+                        <!-- Open leads -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft">Pending Pitches</p>
+                            <p class="text-2xl font-bold mt-1">6</p>
+                        </div>
+                    </div>
+
+                    <!-- Sponsor list -->
+                    <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4 overflow-x-auto">
+                        <table class="min-w-max w-full text-xs md:text-sm">
+                            <thead>
+                                <tr class="text-left text-evTextSoft border-b border-evBorder">
+                                    <th class="py-2 pr-3">Sponsor</th>
+                                    <th class="py-2 pr-3">Tier</th>
+                                    <th class="py-2 pr-3">Amount (GH₵)</th>
+                                    <th class="py-2 pr-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-evTextSoft">
+                                <tr class="border-b border-evBorder/40">
+                                    <td class="py-2 pr-3">Aqua Safari Resort</td>
+                                    <td class="py-2 pr-3">Platinum</td>
+                                    <td class="py-2 pr-3">20,000</td>
+                                    <td class="py-2 pr-3 text-emerald-300">Confirmed</td>
+                                </tr>
+                                <tr class="border-b border-evBorder/40">
+                                    <td class="py-2 pr-3">Sunrise Drinks Co.</td>
+                                    <td class="py-2 pr-3">Gold</td>
+                                    <td class="py-2 pr-3">10,000</td>
+                                    <td class="py-2 pr-3 text-amber-300">In Review</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-3">Ghana Travel Hub</td>
+                                    <td class="py-2 pr-3">Silver</td>
+                                    <td class="py-2 pr-3">5,000</td>
+                                    <td class="py-2 pr-3 text-emerald-300">Confirmed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- CTA -->
+                    <div
+                        class="bg-evCard/70 border border-evBorder rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <p class="text-xs text-evTextSoft">
+                            Keep track of sponsor contracts, deliverables and benefits. Export reports for your finance
+                            team.
+                        </p>
+                        <button
+                            class="px-5 py-2 rounded-full bg-evPrimary text-evBg text-sm font-semibold hover:bg-evSecondary transition">
+                            Open Sponsorship Dashboard
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB D: FEEDBACK COLLECTION -->
+                <!-- ============================================== -->
+                <div id="tab-feedback" class="tab-panel hidden space-y-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-comment-dots text-evAccent"></i>
+                        Feedback Collection
+                    </h2>
+
+                    <p class="text-evTextSoft text-sm">
+                        Collect ratings, suggestions and post-event reviews to improve future events.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Average Rating -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Average Rating</p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-3xl font-bold">4.7</span>
+                                <div class="flex text-evPrimary">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-xs text-evTextSoft">Based on 132 reviews.</p>
+                        </div>
+
+                        <!-- Response Count -->
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Responses Collected</p>
+                            <p class="text-3xl font-bold">132</p>
+                            <p class="mt-2 text-xs text-evTextSoft">
+                                78% of attendees submitted feedback.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Comments -->
+                    <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                        <h3 class="font-semibold mb-3 text-sm">Recent Feedback</h3>
+                        <ul class="space-y-3 text-xs text-evTextSoft">
+                            <li class="border-b border-evBorder/40 pb-2">
+                                “Amazing experience! Loved the boat cruise and live music.” – <span
+                                    class="text-evPrimary">Ama</span>
+                            </li>
+                            <li class="border-b border-evBorder/40 pb-2">
+                                “Great vibe, but more vegetarian food options would be nice.” – <span
+                                    class="text-evPrimary">Kwesi</span>
+                            </li>
+                            <li>
+                                “Very well organized. Definitely attending the next one.” – <span
+                                    class="text-evPrimary">Naomi</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- CTA -->
+                    <div
+                        class="bg-evCard/70 border border-evBorder rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <p class="text-xs text-evTextSoft">
+                            Use Eventora feedback tools to build forms, NPS surveys and rating widgets across your event
+                            pages.
+                        </p>
+                        <button
+                            class="px-5 py-2 rounded-full border border-evAccent text-evAccent text-sm font-semibold hover:bg-evAccent hover:text-evBg transition">
+                            Open Feedback Tools
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- TAB E: ANALYTICS & ARCHIVE -->
+                <!-- ============================================== -->
+                <div id="tab-analytics" class="tab-panel hidden space-y-6">
+                    <h2 class="text-2xl font-bold flex items-center gap-3">
+                        <i class="fa-solid fa-chart-line text-evPrimary"></i>
+                        Analytics & Archive
+                    </h2>
+
+                    <p class="text-evTextSoft text-sm">
+                        View attendance, revenue, sponsor and performance stats for your event.
+                    </p>
+
+                    <!-- KPI Grid -->
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Tickets Sold</p>
+                            <p class="text-2xl font-bold">420</p>
+                            <p class="text-[11px] text-emerald-300 mt-1">+12% vs last event</p>
+                        </div>
+
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Revenue (GH₵)</p>
+                            <p class="text-2xl font-bold">63,000</p>
+                            <p class="text-[11px] text-emerald-300 mt-1">Includes sponsorship</p>
+                        </div>
+
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Check-in Rate</p>
+                            <p class="text-2xl font-bold">92%</p>
+                            <p class="text-[11px] text-evTextSoft mt-1">Scanned at gate</p>
+                        </div>
+
+                        <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                            <p class="text-xs text-evTextSoft mb-1">Returning Guests</p>
+                            <p class="text-2xl font-bold">63%</p>
+                            <p class="text-[11px] text-evTextSoft mt-1">From previous events</p>
+                        </div>
+                    </div>
+
+                    <!-- Archive List -->
+                    <div class="bg-evCard/70 border border-evBorder rounded-2xl p-4">
+                        <h3 class="font-semibold mb-3 text-sm">Archived Events</h3>
+                        <ul class="space-y-2 text-xs text-evTextSoft">
+                            <li class="flex items-center justify-between border-b border-evBorder/40 pb-2">
+                                <span>Holiday Getaway 2025</span>
+                                <button
+                                    class="px-3 py-1 rounded-full bg-evBgSoft text-[11px] hover:bg-evPrimary hover:text-evBg transition">
+                                    View Report
+                                </button>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-evBorder/40 pb-2">
+                                <span>Summer Beach Jam 2024</span>
+                                <button
+                                    class="px-3 py-1 rounded-full bg-evBgSoft text-[11px] hover:bg-evPrimary hover:text-evBg transition">
+                                    View Report
+                                </button>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span>New Year Countdown 2024</span>
+                                <button
+                                    class="px-3 py-1 rounded-full bg-evBgSoft text-[11px] hover:bg-evPrimary hover:text-evBg transition">
+                                    View Report
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- CTA -->
+                    <div
+                        class="bg-evCard/70 border border-evBorder rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <p class="text-xs text-evTextSoft">
+                            Export attendance & revenue summary or share analytics with sponsors and stakeholders.
+                        </p>
+                        <button
+                            class="px-5 py-2 rounded-full bg-evSecondary text-evBg text-sm font-semibold hover:bg-evPrimary transition">
+                            View Analytics Dashboard
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- FOOTER – EVENTORA -->
+    <!-- ========================================================= -->
+    <footer id="contact" class="bg-evBgSoft text-evText py-12 mt-16 relative" data-aos="fade-up">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center md:text-left">
+
+                <!-- Logo + Description -->
+                <div>
+                    <img src="image/eventora-logo.png" alt="Eventora Logo" class="w-28 mx-auto md:mx-0 mb-4 rounded-lg">
+                    <p class="text-evTextSoft mt-2 text-sm leading-tight">
+                        Discover, create and enjoy unforgettable events across Ghana.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Quick Links
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-evPrimary">Home</a></li>
+                        <li><a href="events.html" class="hover:text-evPrimary">Events</a></li>
+                        <li><a href="create.html" class="hover:text-evPrimary">Create Event</a></li>
+                        <li><a href="help.html" class="hover:text-evPrimary">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Contact Info
+                    </h3>
+
+                    <div class="text-sm">
+                        <a href="tel:+233501234567"
+                            class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+                            <i class="fas fa-phone-alt mr-2"></i> +233 50 000 0000
+                        </a>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="mailto:support@eventora.com"
+                            class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+                            <i class="fas fa-envelope mr-2"></i> support@eventora.com
+                        </a>
+                    </div>
+
+                    <div class="text-sm">
+                        <div class="inline-flex items-center text-evTextSoft">
+                            <i class="fas fa-map-marker-alt mr-2 text-evSecondary"></i>
+                            Airport Residential Area, Accra – Ghana
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+                        Follow Us
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-evPrimary">Facebook</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">Instagram</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">Twitter</a></li>
+                        <li><a href="#" class="hover:text-evPrimary">LinkedIn</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="mt-10 border-t border-evBorder pt-6 text-center text-evTextSoft text-sm">
+                &copy; <span id="currentYear"></span> Eventora — All-In-One Event Experience Platform in Ghana.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#top" id="backToTop" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-evPrimary text-evBg px-4 py-2 rounded-full shadow-lg 
+            hover:bg-evSecondary transition-opacity duration-300 opacity-0 pointer-events-none z-50">
+        ↑
+    </a>
+
+    <!-- ========================================================= -->
+    <!-- JS: AOS, BACK TO TOP, FOOTER YEAR, TABS, RATING, TICKETS -->
+    <!-- ========================================================= -->
+    <script>
+        /* ----------------- AOS LOADER ----------------- */
+        function ensureAOS(callback) {
+            if (typeof AOS !== "undefined") {
+                callback();
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+            script.onload = callback;
+            script.onerror = () => console.warn("AOS failed to load.");
+            document.body.appendChild(script);
+        }
+
+        function initAOS() {
+            if (typeof AOS !== "undefined") {
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 120,
+                    easing: "ease-out"
+                });
+                setTimeout(() => AOS.refresh(), 200);
+            }
+        }
+
+        window.addEventListener("load", () => {
+            ensureAOS(initAOS);
+        });
+
+        /* ----------------- FOOTER YEAR ----------------- */
+        const yearEl = document.getElementById("currentYear");
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+
+        /* ----------------- BACK TO TOP ----------------- */
+        const backToTop = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backToTop.classList.remove("opacity-0", "pointer-events-none");
+                backToTop.classList.add("opacity-100");
+            } else {
+                backToTop.classList.add("opacity-0", "pointer-events-none");
+                backToTop.classList.remove("opacity-100");
+            }
+        });
+        backToTop.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        /* ----------------- SIDEBAR & MOBILE TABS ----------------- */
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const tabPanels = document.querySelectorAll(".tab-panel");
+        const mobileSelect = document.getElementById("mobileTabSelect");
+
+        function activateTab(tabId) {
+            tabPanels.forEach(panel => {
+                panel.classList.toggle("hidden", panel.id !== tabId);
+            });
+
+            tabButtons.forEach(btn => {
+                const active = btn.dataset.tab === tabId;
+                btn.classList.toggle("bg-evCard", active);
+                btn.classList.toggle("text-evPrimary", active);
+                btn.classList.toggle("font-semibold", active);
+            });
+
+            if (mobileSelect && mobileSelect.value !== tabId) {
+                mobileSelect.value = tabId;
+            }
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tabId = btn.dataset.tab;
+                activateTab(tabId);
+            });
+        });
+
+        if (mobileSelect) {
+            mobileSelect.addEventListener("change", (e) => {
+                activateTab(e.target.value);
+            });
+        }
+
+        // Default: Event Details
+        activateTab("tab-event-details");
+
+
+        /* ------------------------------- */
+        /* PRELOADER */
+        /* ------------------------------- */
+        function hidePreloader() {
+            const pre = document.getElementById("preloader");
+            setTimeout(() => {
+                pre.style.opacity = "0";
+                pre.style.transition = "opacity .5s ease";
+                setTimeout(() => {
+                    pre.style.display = "none";
+                    window.scrollTo(0, 0);
+                }, 600);
+            }, 1800);  // matches your animation duration
+        }
+
+        window.addEventListener("load", hidePreloader);
+
+
+        /* ----------------- STAR RATING ----------------- */
+        const stars = document.querySelectorAll("#starRating i");
+        const ratingText = document.getElementById("ratingValue");
+        let selectedRating = 4; // default
+
+        function highlightStars(count) {
+            stars.forEach((star, index) => {
+                if (index < count) {
+                    star.classList.remove("text-gray-500");
+                    star.classList.add("text-evPrimary");
+                } else {
+                    star.classList.add("text-gray-500");
+                    star.classList.remove("text-evPrimary");
+                }
+            });
+        }
+
+        if (stars.length && ratingText) {
+            highlightStars(selectedRating);
+
+            stars.forEach(star => {
+                star.addEventListener("mouseover", function () {
+                    const value = this.dataset.star;
+                    highlightStars(value);
+                });
+
+                star.addEventListener("mouseout", function () {
+                    highlightStars(selectedRating);
+                });
+
+                star.addEventListener("click", function () {
+                    selectedRating = this.dataset.star;
+                    highlightStars(selectedRating);
+                    ratingText.textContent = `${selectedRating}.0 (Your rating submitted)`;
+                });
+            });
+        }
+
+        /* ----------------- TICKET TOTAL ----------------- */
+        const qtySelect = document.getElementById("ticketQuantity");
+        const totalPriceText = document.getElementById("totalPrice");
+        const buyButton = document.getElementById("buyButton");
+        const TICKET_PRICE = 150;
+
+        if (qtySelect && totalPriceText && buyButton) {
+            qtySelect.addEventListener("change", () => {
+                const qty = parseInt(qtySelect.value);
+                const total = qty * TICKET_PRICE;
+                totalPriceText.textContent = `Total: GH₵ ${total}`;
+                buyButton.href = `https://forms.gle/your-rsvp-link?qty=${qty}`;
+            });
+        }
+    </script>
+
+</body>
+
+</html>

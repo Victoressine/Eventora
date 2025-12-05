@@ -263,171 +263,168 @@
     </script>
 
     <!-- ========================================================= -->
-<!-- HERO SECTION — PARALLAX + FADE SLIDESHOW + RESPONSIVE -->
-<!-- ========================================================= -->
+    <!-- HERO SECTION — PARALLAX + FADE SLIDESHOW + RESPONSIVE -->
+    <!-- ========================================================= -->
 
-<section id="heroParallax"
-    class="relative overflow-hidden w-full min-h-[420px] sm:min-h-[520px] md:min-h-[620px] lg:min-h-[620px] xl:min-h-[620px] 2xl:min-h-[700px] flex items-center">
+    <section id="heroParallax"
+        class="relative overflow-hidden w-full min-h-[420px] sm:min-h-[520px] md:min-h-[620px] lg:min-h-[620px] xl:min-h-[620px] 2xl:min-h-[700px] flex items-center">
 
-    <!-- Background Slideshow -->
-    <div id="slideshow" class="absolute inset-0 -z-10">
+        <!-- Background Slideshow -->
+        <div id="slideshow" class="absolute inset-0 -z-10">
 
-        <!-- Slide 1 -->
-        <img src="image/cape-coast-castle.jpg"
-            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-100 transition-opacity duration-[1500ms] ease-in-out" />
+            <!-- Slide 1 -->
+            <img src="image/cape-coast-castle.jpg"
+                class="slide w-full h-full absolute inset-0 object-cover object-center opacity-100 transition-opacity duration-[1500ms] ease-in-out" />
 
-        <!-- Slide 2 -->
-        <img src="image/elmina-coast-&-beach.jpg"
-            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+            <!-- Slide 2 -->
+            <img src="image/elmina-coast-&-beach.jpg"
+                class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
 
-        <!-- Slide 3 -->
-        <img src="image/beach-events.jpg"
-            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+            <!-- Slide 3 -->
+            <img src="image/beach-events.jpg"
+                class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
 
-        <!-- Slide 4 -->
-        <img src="image/aqua-safari .jpg"
-            class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
+            <!-- Slide 4 -->
+            <img src="image/aqua-safari .jpg"
+                class="slide w-full h-full absolute inset-0 object-cover object-center opacity-0 transition-opacity duration-[1500ms] ease-in-out" />
 
-        <!-- Dark Overlay -->
-        <div class="absolute inset-0 bg-black/50"></div>
-    </div>
-
-    <!-- HERO CONTENT -->
-    <div class="relative z-20 text-center px-6 max-w-3xl mx-auto">
-        <h1
-            class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight text-white drop-shadow-xl animate-fadeInUp">
-            Discover Amazing Events Across Ghana
-        </h1>
-
-        <p class="mt-4 text-sm sm:text-base md:text-lg text-gray-200 max-w-xl mx-auto animate-fadeInUp delay-200">
-            Concerts, nightlife, festivals, conferences, holidays & more.
-            Your next unforgettable experience starts here.
-        </p>
-
-        <!-- Search Bar -->
-        <div
-            class="mt-8 bg-evBg/40 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-xl animate-fadeInUp delay-300">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-
-                <!-- Search -->
-                <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
-                    <i class="fa-solid fa-magnifying-glass text-yellow-300"></i>
-                    <input
-                        class="bg-transparent w-full text-sm text-white placeholder-gray-300 focus:outline-none"
-                        placeholder="Search for events..." />
-                </div>
-
-                <!-- Location -->
-                <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
-                    <i class="fa-solid fa-location-dot text-blue-300"></i>
-                    <select
-                        class="bg-transparent w-full text-sm text-white focus:outline-none">
-                        <option class="text-black">All Locations</option>
-                        <option class="text-black">Accra</option>
-                        <option class="text-black">Kumasi</option>
-                        <option class="text-black">Cape Coast</option>
-                        <option class="text-black">Takoradi</option>
-                    </select>
-                </div>
-
-                <!-- Date Filter -->
-                <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-days text-green-300"></i>
-                    <select
-                        class="bg-transparent w-full text-sm text-white focus:outline-none">
-                        <option class="text-black">Soonest</option>
-                        <option class="text-black">Latest</option>
-                        <option class="text-black">Most Popular</option>
-                    </select>
-                </div>
-
-            </div>
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 bg-black/50"></div>
         </div>
 
-    </div>
+        <!-- HERO CONTENT -->
+        <div class="relative z-20 text-center px-6 max-w-3xl mx-auto">
+            <h1
+                class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight text-white drop-shadow-xl animate-fadeInUp">
+                Discover Amazing Events Across Ghana
+            </h1>
 
-</section>
+            <p class="mt-4 text-sm sm:text-base md:text-lg text-gray-200 max-w-xl mx-auto animate-fadeInUp delay-200">
+                Concerts, nightlife, festivals, conferences, holidays & more.
+                Your next unforgettable experience starts here.
+            </p>
 
-<!-- ========================================================= -->
-<!-- HERO CSS ANIMATIONS -->
-<!-- ========================================================= -->
-<style>
-    .animate-fadeInUp {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp .9s forwards ease-out;
-    }
+            <!-- Search Bar -->
+            <div
+                class="mt-8 bg-evBg/40 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-xl animate-fadeInUp delay-300">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-    .delay-200 {
-        animation-delay: .2s;
-    }
+                    <!-- Search -->
+                    <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-yellow-300"></i>
+                        <input class="bg-transparent w-full text-sm text-white placeholder-gray-300 focus:outline-none"
+                            placeholder="Search for events..." />
+                    </div>
 
-    .delay-300 {
-        animation-delay: .3s;
-    }
+                    <!-- Location -->
+                    <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot text-blue-300"></i>
+                        <select class="bg-transparent w-full text-sm text-white focus:outline-none">
+                            <option class="text-black">All Locations</option>
+                            <option class="text-black">Accra</option>
+                            <option class="text-black">Kumasi</option>
+                            <option class="text-black">Cape Coast</option>
+                            <option class="text-black">Takoradi</option>
+                        </select>
+                    </div>
 
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
+                    <!-- Date Filter -->
+                    <div class="bg-evBg/40 border border-white/30 rounded-xl px-3 py-2 flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-green-300"></i>
+                        <select class="bg-transparent w-full text-sm text-white focus:outline-none">
+                            <option class="text-black">Soonest</option>
+                            <option class="text-black">Latest</option>
+                            <option class="text-black">Most Popular</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- HERO CSS ANIMATIONS -->
+    <!-- ========================================================= -->
+    <style>
+        .animate-fadeInUp {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp .9s forwards ease-out;
         }
-    }
-</style>
 
-<!-- ========================================================= -->
-<!-- PARALLAX + SLIDESHOW JS -->
-<!-- ========================================================= -->
-<script>
-(() => {
-
-    /* ========= SLIDESHOW ========= */
-    const slides = document.querySelectorAll(".slide");
-    let index = 0;
-
-    function nextSlide() {
-        slides[index].classList.remove("opacity-100");
-        slides[index].classList.add("opacity-0");
-
-        index = (index + 1) % slides.length;
-
-        slides[index].classList.remove("opacity-0");
-        slides[index].classList.add("opacity-100");
-    }
-
-    setInterval(nextSlide, 20000); // every 20 secs
-
-
-    /* ========= PARALLAX EFFECT ========= */
-    const hero = document.getElementById("heroParallax");
-    const slideshow = document.getElementById("slideshow");
-
-    let ticking = false;
-
-    function updateParallax() {
-        const rect = hero.getBoundingClientRect();
-        const isDesktop = window.innerWidth >= 1024;
-
-        const factor = isDesktop ? 0.25 : 0.08;
-        const offset = rect.top * factor;
-
-        slideshow.style.transform = `translateY(${offset}px)`;
-
-        ticking = false;
-    }
-
-    function onScroll() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
+        .delay-200 {
+            animation-delay: .2s;
         }
-    }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", updateParallax);
-    updateParallax();
+        .delay-300 {
+            animation-delay: .3s;
+        }
 
-})();
-</script>
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- ========================================================= -->
+    <!-- PARALLAX + SLIDESHOW JS -->
+    <!-- ========================================================= -->
+    <script>
+        (() => {
+
+            /* ========= SLIDESHOW ========= */
+            const slides = document.querySelectorAll(".slide");
+            let index = 0;
+
+            function nextSlide() {
+                slides[index].classList.remove("opacity-100");
+                slides[index].classList.add("opacity-0");
+
+                index = (index + 1) % slides.length;
+
+                slides[index].classList.remove("opacity-0");
+                slides[index].classList.add("opacity-100");
+            }
+
+            setInterval(nextSlide, 20000); // every 20 secs
+
+
+            /* ========= PARALLAX EFFECT ========= */
+            const hero = document.getElementById("heroParallax");
+            const slideshow = document.getElementById("slideshow");
+
+            let ticking = false;
+
+            function updateParallax() {
+                const rect = hero.getBoundingClientRect();
+                const isDesktop = window.innerWidth >= 1024;
+
+                const factor = isDesktop ? 0.25 : 0.08;
+                const offset = rect.top * factor;
+
+                slideshow.style.transform = `translateY(${offset}px)`;
+
+                ticking = false;
+            }
+
+            function onScroll() {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", updateParallax);
+            updateParallax();
+
+        })();
+    </script>
 
 
     <!-- ========================================================= -->
@@ -493,7 +490,7 @@
                     class="w-20 sm:w-24 md:w-28 lg:w-28 h-20 sm:h-24 md:h-28 lg:h-28 border border-white rounded-full flex items-center justify-center">
                     <i class="fa-solid fa-microphone text-3xl sm:text-4xl text-white"></i>
                 </div>
-                <span class="text-white font-bold">Music Concerts</span>
+                <span class="text-white font-bold">Live Concerts</span>
             </div>
 
             <!-- Dates -->
@@ -523,15 +520,15 @@
                 <span class="text-white font-bold">Food & Drinks</span>
             </div>
         </div>
-    
 
-    <div class="mb-6">
-        <input id="eventSearch" type="text" placeholder="Search categories..." class="w-full px-4 py-3 rounded-xl bg-evBgSoft/60 border border-evBorder
+
+        <div class="mb-6">
+            <input id="eventSearch" type="text" placeholder="Search categories..." class="w-full px-4 py-3 rounded-xl bg-evBgSoft/60 border border-evBorder
            placeholder-evTextSoft text-sm focus:outline-none" />
-    </div>
+        </div>
 
-    <!-- EVENT CARDS GRID -->
-    <div id="eventGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <!-- EVENT CARDS GRID -->
+        <div id="eventGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
     </section>
     <!-- ========================================================= -->
@@ -575,7 +572,7 @@
                 img: "image/aqua-safari .jpg",
                 attending: 452,
                 rsvpLink: "https://forms.gle/your-rsvp-link",
-                detailsLink: "event-details-holiday.html"
+                detailsLink: "holidayevent1.html"
             },
 
             {
@@ -590,8 +587,8 @@
             },
 
             {
-                title: "Live Music Concert Festival",
-                category: "Music Concerts",
+                title: "Live Music Concert",
+                category: "Live Concerts",
                 location: "Accra • Independence Square",
                 date: "Sat, 1 Mar 2026",
                 img: "image/live-music-concert-ghana.jpg",
@@ -612,7 +609,7 @@
             },
 
             {
-                title: "Beach Events & Bonfire Festival",
+                title: "Beach Events",
                 category: "Beach Events",
                 location: "Laboma Beach",
                 date: "Sun, 22 Mar 2026",
@@ -623,7 +620,7 @@
             },
 
             {
-                title: "Food & Drinks Festival Ghana",
+                title: "Food & Drinks",
                 category: "Food & Drinks",
                 location: "West Hills Mall",
                 date: "Sat, 10 May 2026",
@@ -746,14 +743,18 @@
 
             <!-- Kakum National Park -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/kakum-national-park.jpg" alt="Kakum National Park Ghana rainforest"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://kakumnationalpark.info/" target="_blank">
+                    <img src="image/kakum-national-park.jpg" alt="Kakum National Park Ghana rainforest"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Kakum National Park
                     </h3>
@@ -764,14 +765,20 @@
 
             <!-- Cape Coast Castle -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/cape-coast-castle.jpg" alt="Cape Coast Castle Ghana"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://en.wikipedia.org/wiki/Cape_Coast_Castle" target="_blank">
+                    <img src="image/cape-coast-castle.jpg" alt="Cape Coast Castle Ghana"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <!-- Overlay FIXED -->
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <!-- Text FIXED -->
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Cape Coast Castle
                     </h3>
@@ -780,16 +787,21 @@
             </div>
 
 
+
             <!-- Mole National Park -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/mole-national-park.jpg" alt="Mole National Park Ghana"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://molenationalpark.org" target="_blank">
+                    <img src="image/mole-national-park.jpg" alt="Mole National Park Ghana"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Mole National Park
                     </h3>
@@ -800,14 +812,18 @@
 
             <!-- Lake Volta -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/lake-volta.jpg" alt="Lake Volta Ghana"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://en.wikipedia.org/wiki/Lake_Volta" target="_blank">
+                    <img src="image/lake-volta.jpg" alt="Lake Volta Ghana"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Lake Volta
                     </h3>
@@ -818,14 +834,18 @@
 
             <!-- Elmina Beach -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/elmina-coast-&-beach.jpg" alt="Elmina Beach Ghana"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://ghanatrvl.com/places-to-see/beaches/elmina-beach/" target="_blank">
+                    <img src="image/elmina-coast-&-beach.jpg" alt="Elmina Beach Ghana"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Elmina Coast & Beach
                     </h3>
@@ -833,24 +853,26 @@
                 </div>
             </div>
 
-
             <!-- Wli Waterfalls -->
             <div class="destination-card relative overflow-hidden rounded-2xl shadow-lg group 
-    w-full mx-auto max-w-sm sm:max-w-full h-42 sm:h-42 md:h-48 lg:h-48">
+w-full mx-auto max-w-sm sm:max-w-full">
 
-                <img src="image/wli-waterfalls-&-volta.jpg" alt="Wli Waterfalls Ghana"
-                    class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <a href="https://en.wikipedia.org/wiki/Wli_waterfalls" target="_blank">
+                    <img src="image/wli-waterfalls-&-volta.jpg" alt="Wli Waterfalls Ghana"
+                        class="w-full h-44 sm:h-52 md:h-60 lg:h-60 object-cover group-hover:scale-110 transition-transform duration-500" />
+                </a>
 
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300"></div>
+                <div
+                    class="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none">
+                </div>
 
-                <div class="absolute bottom-4 left-4 md:left-5">
+                <div class="absolute bottom-4 left-4 md:left-5 pointer-events-none">
                     <h3 class="text-white font-bold text-lg sm:text-xl md:text-2xl leading-tight">
                         Wli Waterfalls & Volta
                     </h3>
                     <p class="text-xs sm:text-sm text-white opacity-90">Oti Region — Ghana</p>
                 </div>
             </div>
-
 
         </div>
     </section>
