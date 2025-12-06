@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventora – Create Event</title>
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="image/eventora-logo.png" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            evPrimary: "#facc15",
+            evSecondary: "#16a34a",
+            evAccent: "#0ea5e9",
+            evBg: "#15803d",
+            evBgSoft: "#166534",
+            evCard: "#14532d",
+            evText: "#ffffff",
+            evTextSoft: "#d1d5db",
+            evBorder: "#111827",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body class="bg-evBg text-evText antialiased">
+
+  <!-- ========================================================= -->
+  <!-- HEADER -->
+  <!-- ========================================================= -->
+  <header class="bg-evBgSoft/70 backdrop-blur border-b border-evBorder sticky top-0 z-40">
+    <div class="max-w-[90rem] mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="image/eventora-logo.png"
+             class="h-12 w-12 rounded-lg shadow object-cover"
+             alt="Eventora Logo" />
+        <div>
+          <h1 class="text-xl md:text-2xl font-bold leading-tight">Eventora</h1>
+          <p class="text-[11px] text-evTextSoft -mt-0.5">Create a new event</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="events.html"
+           class="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-evBorder text-[12px] text-evTextSoft hover:border-evPrimary hover:text-evPrimary transition">
+          <i class="fa-solid fa-list"></i>
+          My Events
+        </a>
+        <a href="index.html"
+           class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-evPrimary text-evBg text-[12px] font-semibold hover:bg-evSecondary transition">
+          <i class="fa-solid fa-arrow-left"></i>
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN CONTENT -->
+  <!-- ========================================================= -->
+  <main class="max-w-5xl mx-auto px-4 md:px-6 py-8 space-y-8">
+
+    <!-- Top helper + status -->
+    <section class="bg-evCard/80 border border-evBorder rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <p class="text-sm font-semibold flex items-center gap-2">
+          <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-evPrimary/15 text-evPrimary text-xs">
+            <i class="fa-solid fa-bolt"></i>
+          </span>
+          Start your new Eventora listing
+        </p>
+        <p class="text-xs text-evTextSoft">
+          Fill in the basics, add tickets and branding, then publish to make your event discoverable across Ghana.
+        </p>
+      </div>
+      <div class="text-right space-y-1">
+        <p class="text-[11px] uppercase tracking-wide text-evTextSoft">Draft status</p>
+        <span class="inline-flex items-center gap-1 rounded-full bg-evBgSoft/80 border border-evBorder px-3 py-1 text-[11px]">
+          <span class="h-2 w-2 rounded-full bg-amber-300 animate-pulse"></span>
+          Draft – Not published
+        </span>
+      </div>
+    </section>
+
+    <!-- Step nav -->
+    <section class="bg-evCard/80 border border-evBorder rounded-2xl p-4">
+      <div class="flex flex-wrap gap-2 text-[11px]">
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evPrimary text-evBg font-semibold"
+                data-target="#step-basic">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">1</span>
+          Basic info
+        </button>
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evBgSoft/80 text-evTextSoft border border-evBorder"
+                data-target="#step-location">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">2</span>
+          Date & location
+        </button>
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evBgSoft/80 text-evTextSoft border border-evBorder"
+                data-target="#step-tickets">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">3</span>
+          Tickets
+        </button>
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evBgSoft/80 text-evTextSoft border border-evBorder"
+                data-target="#step-media">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">4</span>
+          Media & branding
+        </button>
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evBgSoft/80 text-evTextSoft border border-evBorder"
+                data-target="#step-settings">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">5</span>
+          Settings
+        </button>
+        <button class="step-link inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-evBgSoft/80 text-evTextSoft border border-evBorder"
+                data-target="#step-review">
+          <span class="h-5 w-5 rounded-full bg-evBg flex items-center justify-center text-[10px]">6</span>
+          Review & publish
+        </button>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <form id="createEventForm" class="space-y-8">
+
+      <!-- ===================================================== -->
+      <!-- STEP 1: BASIC INFO -->
+      <!-- ===================================================== -->
+      <section id="step-basic"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Basic event details</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Let people know what your event is about in a clear and engaging way.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 1 of 6
+          </span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-2">
+          <!-- Event title -->
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold mb-1">
+              Event title <span class="text-evPrimary">*</span>
+            </label>
+            <input type="text" id="eventTitle" name="eventTitle"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   placeholder="e.g. Accra Tech Summit 2026" required />
+            <p class="text-[11px] text-evTextSoft mt-1">
+              Make it short and clear. You can always update this later.
+            </p>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Category <span class="text-evPrimary">*</span>
+            </label>
+            <select id="eventCategory" name="eventCategory"
+                    class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                    required>
+              <option value="">Select category</option>
+              <option value="Holiday">Holiday</option>
+              <option value="Nightlife">Nightlife</option>
+              <option value="Live Concert">Live Concert</option>
+              <option value="Dates">Dates</option>
+              <option value="Beach Events">Beach Events</option>
+              <option value="Food & Drinks">Food & Drinks</option>
+            </select>
+          </div>
+
+          <!-- Event type -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Event type <span class="text-evPrimary">*</span>
+            </label>
+            <select id="eventType" name="eventType"
+                    class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                    required>
+              <option value="">Select type</option>
+              <option value="In-person">In-person</option>
+              <option value="Online">Online</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+
+          <!-- Short tagline -->
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold mb-1">
+              Short tagline
+            </label>
+            <input type="text" id="eventTagline" name="eventTagline"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   placeholder="e.g. Ghana’s biggest innovation & networking experience" />
+          </div>
+
+          <!-- Description -->
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold mb-1">
+              Event description <span class="text-evPrimary">*</span>
+            </label>
+            <textarea id="eventDescription" name="eventDescription" rows="5"
+                      class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                      placeholder="Describe your event, experience, speakers, activities, who it’s for..."
+                      required></textarea>
+            <p class="text-[11px] text-evTextSoft mt-1">
+              Great descriptions help attendees understand the value and feel of your event.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== -->
+      <!-- STEP 2: DATE & LOCATION -->
+      <!-- ===================================================== -->
+      <section id="step-location"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Date & location</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Set when and where your event will happen so people can plan ahead.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 2 of 6
+          </span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-2">
+          <!-- Start date -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Start date <span class="text-evPrimary">*</span>
+            </label>
+            <input type="date" id="startDate" name="startDate"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   required />
+          </div>
+
+          <!-- Start time -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Start time <span class="text-evPrimary">*</span>
+            </label>
+            <input type="time" id="startTime" name="startTime"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   required />
+          </div>
+
+          <!-- End date -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              End date
+            </label>
+            <input type="date" id="endDate" name="endDate"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+          </div>
+
+          <!-- End time -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              End time
+            </label>
+            <input type="time" id="endTime" name="endTime"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary" />
+          </div>
+
+          <!-- Venue type -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Venue type <span class="text-evPrimary">*</span>
+            </label>
+            <select id="venueType" name="venueType"
+                    class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                    required>
+              <option value="">Select venue type</option>
+              <option value="Venue">Physical venue</option>
+              <option value="Online">Online event</option>
+              <option value="Hybrid">Hybrid (venue + online)</option>
+            </select>
+          </div>
+
+          <!-- City -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              City / Region
+            </label>
+            <select id="eventCity" name="eventCity"
+                    class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary">
+              <option value="">Select city</option>
+              <option value="Accra">Accra</option>
+              <option value="Kumasi">Kumasi</option>
+              <option value="Takoradi">Takoradi</option>
+              <option value="Cape Coast">Cape Coast</option>
+              <option value="Tamale">Tamale</option>
+              <option value="Ho">Ho</option>
+            </select>
+          </div>
+
+          <!-- Venue name -->
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold mb-1">
+              Venue / location name
+            </label>
+            <input type="text" id="venueName" name="venueName"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   placeholder="e.g. Accra International Conference Centre, Aqua Safari, Online via Zoom" />
+          </div>
+
+          <!-- Address -->
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold mb-1">
+              Address / directions
+            </label>
+            <textarea id="venueAddress" name="venueAddress" rows="3"
+                      class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                      placeholder="Include address or join link, plus any notes that help people find the event."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== -->
+      <!-- STEP 3: TICKETS -->
+      <!-- ===================================================== -->
+      <section id="step-tickets"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Tickets & pricing</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Create ticket types, set pricing and capacity. You can update or add more tickets later.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 3 of 6
+          </span>
+        </div>
+
+        <div class="flex items-center justify-between gap-2 mt-2">
+          <p class="text-[12px] text-evTextSoft">
+            Start with at least one ticket type. You can mix free and paid tickets.
+          </p>
+          <button type="button" id="addTicketBtn"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-evBgSoft border border-evPrimary/60 text-[11px] text-evPrimary hover:bg-evPrimary hover:text-evBg transition">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            Add ticket type
+          </button>
+        </div>
+
+        <div id="ticketsContainer" class="space-y-3 mt-3">
+          <!-- Ticket rows will be injected here -->
+        </div>
+
+        <p class="text-[11px] text-evTextSoft">
+          Tip: You can add VIP, Regular, Early Bird or Group tickets to match your pricing strategy.
+        </p>
+      </section>
+
+      <!-- ===================================================== -->
+      <!-- STEP 4: MEDIA & BRANDING -->
+      <!-- ===================================================== -->
+      <section id="step-media"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Media & branding</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Upload a strong cover image so your event stands out in discovery and search.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 4 of 6
+          </span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mt-2">
+          <!-- Cover image upload -->
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold mb-1">
+              Cover image <span class="text-evPrimary">*</span>
+            </label>
+            <label for="coverImageInput"
+                   class="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-evBorder bg-evBgSoft/80 px-4 py-6 text-center cursor-pointer hover:border-evPrimary hover:bg-evBgSoft transition">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl text-evAccent"></i>
+              <p class="text-xs">
+                <span class="font-semibold">Click to upload</span> or drag and drop
+              </p>
+              <p class="text-[11px] text-evTextSoft">
+                Recommended: 1200 x 600px • JPG or PNG
+              </p>
+              <input type="file" id="coverImageInput" accept="image/*" class="hidden" />
+            </label>
+          </div>
+
+          <!-- Preview -->
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold mb-1">
+              Image preview
+            </label>
+            <div class="rounded-xl border border-evBorder bg-evBgSoft/80 h-40 md:h-48 flex items-center justify-center overflow-hidden"
+                 id="coverPreviewWrapper">
+              <p class="text-[11px] text-evTextSoft" id="coverPreviewPlaceholder">
+                No image selected yet
+              </p>
+              <img id="coverPreviewImage" src="" alt="Cover preview"
+                   class="hidden w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Brand color / tag -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Event highlight text / badge
+            </label>
+            <input type="text" id="highlightText" name="highlightText"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm placeholder:text-evTextSoft/60 focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   placeholder="e.g. Limited seats • Early bird ends soon" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Primary theme color (optional)
+            </label>
+            <input type="color" id="themeColor" name="themeColor"
+                   class="w-16 h-9 rounded-lg bg-evBgSoft border border-evBorder cursor-pointer" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== -->
+      <!-- STEP 5: SETTINGS -->
+      <!-- ===================================================== -->
+      <section id="step-settings"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Event settings</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Control visibility, capacity and basic preferences for your event.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 5 of 6
+          </span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-2">
+          <!-- Visibility -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Event visibility
+            </label>
+            <select id="visibility" name="visibility"
+                    class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary">
+              <option value="Public">Public – visible to everyone</option>
+              <option value="Unlisted">Unlisted – only people with link</option>
+              <option value="Private">Private – invite only</option>
+            </select>
+          </div>
+
+          <!-- Capacity -->
+          <div>
+            <label class="block text-xs font-semibold mb-1">
+              Overall capacity
+            </label>
+            <input type="number" id="capacity" name="capacity" min="1"
+                   class="w-full rounded-lg bg-evBgSoft border border-evBorder px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-evPrimary"
+                   placeholder="e.g. 400" />
+          </div>
+
+          <!-- Allow anonymous feedback -->
+          <div class="md:col-span-2">
+            <label class="flex items-start gap-2 text-xs">
+              <input type="checkbox" id="anonymousFeedback" name="anonymousFeedback"
+                     class="mt-[2px] h-3.5 w-3.5 rounded border-evBorder bg-evBgSoft text-evPrimary focus:ring-evPrimary" />
+              <span>
+                Allow anonymous post-event feedback
+                <span class="block text-[11px] text-evTextSoft">
+                  Attendees can submit feedback without logging in. Great for honest reviews.
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Send reminders -->
+          <div class="md:col-span-2">
+            <label class="flex items-start gap-2 text-xs">
+              <input type="checkbox" id="autoReminders" name="autoReminders" checked
+                     class="mt-[2px] h-3.5 w-3.5 rounded border-evBorder bg-evBgSoft text-evPrimary focus:ring-evPrimary" />
+              <span>
+                Send automatic reminders to attendees
+                <span class="block text-[11px] text-evTextSoft">
+                  Eventora can automatically send reminder emails or notifications before the event.
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================== -->
+      <!-- STEP 6: REVIEW & PUBLISH -->
+      <!-- ===================================================== -->
+      <section id="step-review"
+               class="bg-evCard/90 border border-evBorder rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h2 class="text-lg md:text-xl font-semibold">Review & publish</h2>
+            <p class="text-[12px] text-evTextSoft">
+              Quickly review your key details. You can always edit the event after saving.
+            </p>
+          </div>
+          <span class="hidden sm:inline-flex text-[11px] text-evTextSoft">
+            Step 6 of 6
+          </span>
+        </div>
+
+        <!-- Summary preview (simple) -->
+        <div class="grid md:grid-cols-2 gap-4 mt-2 text-[12px]">
+          <div class="space-y-2">
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">Title:</span>
+              <span id="summaryTitle" class="ml-1 text-evTextSoft">—</span>
+            </p>
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">Category:</span>
+              <span id="summaryCategory" class="ml-1 text-evTextSoft">—</span>
+            </p>
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">Type:</span>
+              <span id="summaryType" class="ml-1 text-evTextSoft">—</span>
+            </p>
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">City:</span>
+              <span id="summaryCity" class="ml-1 text-evTextSoft">—</span>
+            </p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">Start:</span>
+              <span id="summaryStart" class="ml-1 text-evTextSoft">—</span>
+            </p>
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">End:</span>
+              <span id="summaryEnd" class="ml-1 text-evTextSoft">—</span>
+            </p>
+            <p class="text-evTextSoft">
+              <span class="font-semibold text-evText">Visibility:</span>
+              <span id="summaryVisibility" class="ml-1 text-evTextSoft">Public</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Error area -->
+        <div id="errorBox"
+             class="hidden mt-4 rounded-xl border border-red-500/60 bg-red-500/10 px-3 py-2 text-[12px] text-red-100">
+          Please fill all required fields marked with (<span class="text-evPrimary">*</span>).
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="text-[11px] text-evTextSoft">
+            By clicking <span class="font-semibold text-evText">Publish event</span>,
+            you confirm that your event information is accurate and follows Eventora guidelines.
+          </div>
+          <div class="flex gap-2 justify-end">
+            <button type="button" id="saveDraftBtn"
+                    class="px-4 py-1.5 rounded-full border border-evBorder text-[12px] text-evTextSoft hover:border-evPrimary hover:text-evPrimary transition">
+              Save draft
+            </button>
+            <button type="submit"
+                    class="px-5 py-1.5 rounded-full bg-evPrimary text-evBg text-[12px] font-semibold hover:bg-evSecondary transition">
+              Publish event
+            </button>
+          </div>
+        </div>
+      </section>
+    </form>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================= -->
+  <footer class="bg-evBgSoft text-evText py-10 mt-8 border-t border-evBorder">
+    <div class="max-w-[90rem] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center md:text-left">
+
+        <!-- Logo + Description -->
+        <div>
+          <img src="image/eventora-logo.png"
+               alt="Eventora Logo"
+               class="w-24 mx-auto md:mx-0 mb-4 rounded-lg object-cover">
+          <p class="text-evTextSoft mt-2 text-sm leading-tight">
+            Eventora helps you discover, create and manage unforgettable events across Ghana.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+            Quick Links
+          </h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-evPrimary">Home</a></li>
+            <li><a href="events.html" class="hover:text-evPrimary">Browse Events</a></li>
+            <li><a href="create.html" class="hover:text-evPrimary">Create Event</a></li>
+            <li><a href="help.html" class="hover:text-evPrimary">Help Center</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="space-y-3 text-sm">
+          <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+            Contact Info
+          </h3>
+
+          <div>
+            <a href="tel:+233501234567"
+               class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+              <i class="fas fa-phone-alt mr-2"></i> +233 50 000 0000
+            </a>
+          </div>
+
+          <div>
+            <a href="mailto:support@eventora.com"
+               class="inline-flex items-center text-evTextSoft hover:text-evPrimary transition">
+              <i class="fas fa-envelope mr-2"></i> support@eventora.com
+            </a>
+          </div>
+
+          <div class="inline-flex items-center text-evTextSoft">
+            <i class="fas fa-map-marker-alt mr-2 text-evSecondary"></i>
+            Airport Residential Area, Accra – Ghana
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="text-sm">
+          <h3 class="text-lg font-semibold mb-3 text-evPrimary leading-tight tracking-tight">
+            Follow Us
+          </h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-evPrimary">Facebook</a></li>
+            <li><a href="#" class="hover:text-evPrimary">Instagram</a></li>
+            <li><a href="#" class="hover:text-evPrimary">Twitter</a></li>
+            <li><a href="#" class="hover:text-evPrimary">LinkedIn</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="mt-8 border-t border-evBorder pt-4 text-center text-evTextSoft text-xs">
+        &copy; <span id="currentYear"></span> Eventora — All-In-One Event Experience Platform in Ghana.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop"
+          class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-evPrimary text-evBg px-3 py-2 rounded-full shadow-lg 
+                 hover:bg-evSecondary transition-opacity duration-300 opacity-0 pointer-events-none z-50 text-sm flex items-center gap-1">
+    <i class="fa-solid fa-arrow-up text-xs"></i>
+  </button>
+
+  <!-- ========================================================= -->
+  <!-- JS: Steps, Tickets, Preview, Validation, Back-to-top -->
+  <!-- ========================================================= -->
+  <script>
+    /* ----------------- FOOTER YEAR ----------------- */
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    /* ----------------- STEP NAV SCROLL ----------------- */
+    document.querySelectorAll(".step-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.target;
+        const el = document.querySelector(target);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    /* ----------------- BACK TO TOP ----------------- */
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.remove("opacity-0", "pointer-events-none");
+        backToTop.classList.add("opacity-100");
+      } else {
+        backToTop.classList.add("opacity-0", "pointer-events-none");
+        backToTop.classList.remove("opacity-100");
+      }
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    /* ----------------- TICKETS LOGIC ----------------- */
+    const ticketsContainer = document.getElementById("ticketsContainer");
+    const addTicketBtn = document.getElementById("addTicketBtn");
+
+    let ticketIdCounter = 0;
+
+    function createTicketRow(defaults = {}) {
+      ticketIdCounter++;
+      const id = ticketIdCounter;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "rounded-xl border border-evBorder bg-evBgSoft/80 px-3 py-3 text-[12px] flex flex-col gap-2 md:flex-row md:items-end md:gap-3";
+      wrapper.dataset.ticketId = id;
+
+      wrapper.innerHTML = `
+        <div class="flex-1">
+          <label class="block text-[11px] font-semibold mb-1">Ticket name <span class="text-evPrimary">*</span></label>
+          <input type="text" name="ticketName" value="${defaults.name || ""}"
+                 class="w-full rounded-lg bg-evBgSoft border border-evBorder px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-evPrimary"
+                 placeholder="e.g. Regular, VIP, Early Bird" required />
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold mb-1">Type</label>
+          <select name="ticketType"
+                  class="w-full rounded-lg bg-evBgSoft border border-evBorder px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-evPrimary">
+            <option value="Paid" ${defaults.type === "Free" ? "" : "selected"}>Paid</option>
+            <option value="Free" ${defaults.type === "Free" ? "selected" : ""}>Free</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold mb-1">Price (GH₵)</label>
+          <input type="number" min="0" step="0.01" name="ticketPrice" value="${defaults.price || "150"}"
+                 class="w-28 rounded-lg bg-evBgSoft border border-evBorder px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-evPrimary" />
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold mb-1">Quantity</label>
+          <input type="number" min="1" name="ticketQty" value="${defaults.qty || "100"}"
+                 class="w-24 rounded-lg bg-evBgSoft border border-evBorder px-2 py-1.5 text-[12px] focus:outline-none focus:ring-1 focus:ring-evPrimary" />
+        </div>
+
+        <button type="button"
+                class="self-start md:self-auto mt-1 inline-flex items-center justify-center h-8 w-8 rounded-full border border-evBorder text-evTextSoft hover:text-red-300 hover:border-red-400 transition removeTicketBtn"
+                title="Remove ticket">
+          <i class="fa-solid fa-xmark text-[11px]"></i>
+        </button>
+      `;
+
+      // Attach remove handler
+      wrapper.querySelector(".removeTicketBtn").addEventListener("click", () => {
+        ticketsContainer.removeChild(wrapper);
+        // ensure at least one ticket row
+        if (!ticketsContainer.children.length) {
+          createTicketRow();
+        }
+      });
+
+      ticketsContainer.appendChild(wrapper);
+    }
+
+    // Default ticket row
+    createTicketRow({ name: "General Admission", type: "Paid", price: "150", qty: "100" });
+
+    addTicketBtn.addEventListener("click", () => {
+      createTicketRow();
+    });
+
+    /* ----------------- COVER IMAGE PREVIEW ----------------- */
+    const coverInput = document.getElementById("coverImageInput");
+    const coverPreviewImage = document.getElementById("coverPreviewImage");
+    const coverPreviewPlaceholder = document.getElementById("coverPreviewPlaceholder");
+
+    coverInput.addEventListener("change", () => {
+      const file = coverInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        coverPreviewImage.src = e.target.result;
+        coverPreviewImage.classList.remove("hidden");
+        coverPreviewPlaceholder.classList.add("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /* ----------------- REVIEW SUMMARY ----------------- */
+    function updateSummary() {
+      const title = document.getElementById("eventTitle").value.trim();
+      const category = document.getElementById("eventCategory").value;
+      const type = document.getElementById("eventType").value;
+      const city = document.getElementById("eventCity").value;
+
+      const startDate = document.getElementById("startDate").value;
+      const startTime = document.getElementById("startTime").value;
+      const endDate = document.getElementById("endDate").value;
+      const endTime = document.getElementById("endTime").value;
+      const visibility = document.getElementById("visibility").value;
+
+      document.getElementById("summaryTitle").textContent = title || "—";
+      document.getElementById("summaryCategory").textContent = category || "—";
+      document.getElementById("summaryType").textContent = type || "—";
+      document.getElementById("summaryCity").textContent = city || "—";
+
+      document.getElementById("summaryStart").textContent =
+        startDate || startTime ? `${startDate || "—"} ${startTime || ""}` : "—";
+
+      document.getElementById("summaryEnd").textContent =
+        endDate || endTime ? `${endDate || "—"} ${endTime || ""}` : "—";
+
+      document.getElementById("summaryVisibility").textContent = visibility || "Public";
+    }
+
+    ["eventTitle", "eventCategory", "eventType", "eventCity", "startDate", "startTime", "endDate", "endTime", "visibility"]
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("input", updateSummary);
+          el.addEventListener("change", updateSummary);
+        }
+      });
+
+    /* ----------------- VALIDATION + SUBMIT ----------------- */
+    const form = document.getElementById("createEventForm");
+    const errorBox = document.getElementById("errorBox");
+    const saveDraftBtn = document.getElementById("saveDraftBtn");
+
+    saveDraftBtn.addEventListener("click", () => {
+      updateSummary();
+      errorBox.classList.add("hidden");
+      alert("Draft saved (demo only). In a real app this would save to your backend.");
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      updateSummary();
+
+      // Required fields check
+      const requiredIds = ["eventTitle", "eventCategory", "eventType", "eventDescription", "startDate", "startTime", "venueType"];
+      let hasError = false;
+
+      requiredIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.value.trim()) {
+          hasError = true;
+          el.classList.add("ring-2", "ring-red-500/70");
+        } else if (el) {
+          el.classList.remove("ring-2", "ring-red-500/70");
+        }
+      });
+
+      // Ticket name required for at least one ticket
+      const firstTicketName = ticketsContainer.querySelector("input[name='ticketName']");
+      if (firstTicketName && !firstTicketName.value.trim()) {
+        hasError = true;
+        firstTicketName.classList.add("ring-2", "ring-red-500/70");
+      } else if (firstTicketName) {
+        firstTicketName.classList.remove("ring-2", "ring-red-500/70");
+      }
+
+      if (hasError) {
+        errorBox.classList.remove("hidden");
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      } else {
+        errorBox.classList.add("hidden");
+      }
+
+      // Demo output – gather minimal payload
+      const payload = {
+        title: document.getElementById("eventTitle").value.trim(),
+        category: document.getElementById("eventCategory").value,
+        type: document.getElementById("eventType").value,
+        tagline: document.getElementById("eventTagline").value.trim(),
+        description: document.getElementById("eventDescription").value.trim(),
+        startDate: document.getElementById("startDate").value,
+        startTime: document.getElementById("startTime").value,
+        endDate: document.getElementById("endDate").value,
+        endTime: document.getElementById("endTime").value,
+        venueType: document.getElementById("venueType").value,
+        city: document.getElementById("eventCity").value,
+        visibility: document.getElementById("visibility").value,
+        capacity: document.getElementById("capacity").value,
+        tickets: []
+      };
+
+      ticketsContainer.querySelectorAll("[data-ticket-id]").forEach(row => {
+        payload.tickets.push({
+          name: row.querySelector("input[name='ticketName']").value.trim(),
+          type: row.querySelector("select[name='ticketType']").value,
+          price: row.querySelector("input[name='ticketPrice']").value,
+          qty: row.querySelector("input[name='ticketQty']").value
+        });
+      });
+
+      console.log("Event payload (demo only):", payload);
+      alert("Event published (demo only). Check the console for the event payload.");
+    });
+
+    // Initial summary values
+    updateSummary();
+  </script>
+</body>
+
+</html>

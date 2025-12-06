@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventora – RSVP</title>
+
+    <link rel="icon" type="image/png" href="image/eventora-logo.png" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Eventora Tailwind Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        evPrimary: "#facc15",
+                        evSecondary: "#16a34a",
+                        evAccent: "#0ea5e9",
+                        evBg: "#15803d",
+                        evBgSoft: "#166534",
+                        evCard: "#14532d",
+                        evText: "#ffffff",
+                        evTextSoft: "#d1d5db",
+                        evBorder: "#111827",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- jsPDF (for Download Ticket PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- PRELOADER CSS -->
+    <style>
+        @keyframes slidefade {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px) scale(1);
+            }
+        }
+
+        .preloader-animation {
+            animation: slidefade 1.8s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-evBg text-evText">
+
+    <!-- ========================================================= -->
+    <!-- PRELOADER -->
+    <!-- ========================================================= -->
+    <div id="preloader" class="fixed inset-0 bg-evBgSoft flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-evPrimary rounded-full flex items-center justify-center preloader-animation">
+                <img src="image/eventora-logo.png" alt="Eventora Logo" class="h-20 w-20 object-contain" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MAIN RSVP CARD -->
+    <!-- ========================================================= -->
+    <div class="w-full max-w-md mx-4 p-8 rounded-2xl bg-evCard/70 backdrop-blur-xl border border-evBorder shadow-xl">
+
+        <!-- Logo -->
+        <div class="flex justify-center mb-4">
+            <div
+                class="h-20 w-20 rounded-xl bg-gradient-to-br from-evPrimary via-evSecondary to-evAccent shadow-md flex items-center justify-center overflow-hidden">
+                <img src="image/eventora-logo.png" class="object-contain h-20 w-20" alt="Eventora Logo" />
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-extrabold text-center mb-1">RSVP for Eventora Experience</h2>
+        <p class="text-center text-evTextSoft text-sm mb-6">
+            Reserve your spot and get your unique Eventora ticket instantly.
+        </p>
+
+        <!-- FORM -->
+        <form id="rsvpForm" novalidate>
+            <!-- Full Name -->
+            <div class="mb-4">
+                <label class="text-sm font-semibold">Full Name</label>
+                <input id="name" type="text" placeholder="Enter your full name"
+                    class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none">
+                <small id="nameError" class="hidden text-red-400 text-xs mt-1">
+                    Name must be at least 3 characters.
+                </small>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="text-sm font-semibold">Email Address</label>
+                <input id="email" type="email" placeholder="Enter your email"
+                    class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none">
+                <small id="emailError" class="hidden text-red-400 text-xs mt-1">
+                    Enter a valid email address.
+                </small>
+            </div>
+
+            <!-- PHONE NUMBER WITH COUNTRY CODE -->
+            <div class="mb-4">
+                <label class="text-sm font-semibold">Phone Number</label>
+
+                <div class="flex gap-2">
+                    <!-- COUNTRY CODE DROPDOWN -->
+                    <select id="countryCode"
+                        class="px-2 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm w-28 focus:ring-2 focus:ring-evPrimary">
+                        <option value="+233">🇬🇭 +233</option>
+                        <option value="+234">🇳🇬 +234</option>
+                        <option value="+254">🇰🇪 +254</option>
+                        <option value="+256">🇺🇬 +256</option>
+                        <option value="+27">🇿🇦 +27</option>
+                        <option value="custom">➕ Add More…</option>
+                    </select>
+
+                    <!-- PHONE INPUT -->
+                    <input id="phone" type="tel" placeholder="Phone number"
+                        class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none">
+                </div>
+
+                <!-- CUSTOM COUNTRY CODE FIELD (hidden by default) -->
+                <input id="customCode" type="text" maxlength="5" placeholder="Enter country code"
+                    class="hidden mt-2 px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm w-full focus:ring-2 focus:ring-evPrimary focus:outline-none">
+
+                <small id="phoneError" class="hidden text-red-400 text-xs mt-1">
+                    Phone number must be 10–15 digits.
+                </small>
+            </div>
+
+            <!-- TICKET INFO -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-sm font-semibold">Tickets</label>
+                    <span class="text-xs text-evTextSoft">
+                        Ticket Price: <span class="font-semibold text-evPrimary">GH₵ <span
+                                id="ticketPriceLabel">150</span></span>
+                    </span>
+                </div>
+
+                <div class="flex gap-2">
+                    <input id="ticketQty" type="number" min="1" value="1"
+                        class="w-24 px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none">
+                    <div
+                        class="flex-1 flex items-center justify-between px-3 py-2 rounded-lg bg-evBgSoft/40 border border-evBorder text-sm">
+                        <span class="text-evTextSoft">Total</span>
+                        <span class="font-semibold text-evPrimary">GH₵ <span id="totalAmount">150</span></span>
+                    </div>
+                </div>
+
+                <small id="ticketError" class="hidden text-red-400 text-xs mt-1">
+                    Please choose at least 1 ticket.
+                </small>
+            </div>
+
+            <!-- OPTIONAL NOTE -->
+            <div class="mb-6">
+                <label class="text-sm font-semibold flex items-center gap-1">
+                    Optional Note
+                    <span class="text-[10px] text-evTextSoft">(special requests / info)</span>
+                </label>
+                <textarea id="note" rows="3" placeholder="Eg. Coming with friends, dietary needs, etc."
+                    class="w-full px-3 py-2 rounded-lg bg-evBgSoft/60 border border-evBorder text-sm focus:ring-2 focus:ring-evPrimary focus:outline-none resize-none"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full py-2 bg-evPrimary text-evBg rounded-full font-semibold shadow-lg hover:bg-evSecondary hover:scale-[1.03] active:scale-[0.97] transition flex items-center justify-center gap-2">
+                <span>Confirm RSVP</span>
+                <i class="fa-solid fa-ticket"></i>
+            </button>
+
+            <!-- Small processing text -->
+            <p id="submittingText" class="hidden mt-3 text-center text-xs text-evTextSoft">
+                Processing your RSVP…
+            </p>
+        </form>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- SUCCESS POPUP MODAL -->
+    <!-- ========================================================= -->
+    <div id="successModal"
+        class="fixed inset-0 bg-black/60 flex items-center justify-center z-40 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div
+            class="bg-evCard/90 backdrop-blur-xl border border-evBorder rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
+
+            <!-- Close icon -->
+            <button id="closeModalIcon" class="absolute top-3 right-3 text-evTextSoft hover:text-evPrimary text-sm">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center">
+                <div class="mb-3 flex justify-center">
+                    <div class="h-14 w-14 rounded-full bg-evPrimary/90 flex items-center justify-center shadow">
+                        <i class="fa-solid fa-check text-evBg text-2xl"></i>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold mb-2">🎉 RSVP Successful!</h3>
+
+                <p class="text-sm text-evTextSoft mb-4">
+                    Your spot has been reserved. Below are your ticket details.
+                </p>
+
+                <div
+                    class="bg-evBgSoft/60 border border-evBorder rounded-xl px-4 py-3 text-left text-sm space-y-1 mb-4">
+                    <p><span class="text-evTextSoft">Ticket ID:</span>
+                        <span id="modalTicketId" class="font-semibold text-evPrimary ml-1">EVT-000000</span>
+                    </p>
+                    <p><span class="text-evTextSoft">Tickets:</span>
+                        <span id="modalTicketQty" class="font-semibold ml-1">1</span>
+                    </p>
+                    <p><span class="text-evTextSoft">Total Paid:</span>
+                        <span class="font-semibold text-evPrimary ml-1">GH₵ <span
+                                id="modalTotalAmount">150</span></span>
+                    </p>
+                    <p id="modalNoteRow" class="hidden">
+                        <span class="text-evTextSoft">Note:</span>
+                        <span id="modalNoteText" class="ml-1"></span>
+                    </p>
+                </div>
+
+                <!-- Download + Close buttons -->
+                <div class="flex flex-col gap-2">
+                    <button id="downloadTicketBtn"
+                        class="w-full py-2 rounded-full bg-evSecondary text-evBg font-semibold text-sm hover:bg-evPrimary transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        <span>Download Ticket (PDF)</span>
+                    </button>
+
+                    <button id="closeModalBtn"
+                        class="w-full py-2 rounded-full border border-evTextSoft/40 text-evTextSoft text-sm hover:border-evPrimary hover:text-evPrimary transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VALIDATION + LOGIC SCRIPT -->
+    <!-- ========================================================= -->
+    <script>
+        /* ------------------------------- */
+        /* PRELOADER */
+        /* ------------------------------- */
+        window.addEventListener("load", () => {
+            const pre = document.getElementById("preloader");
+            if (!pre) return;
+
+            setTimeout(() => {
+                pre.style.opacity = "0";
+                pre.style.transition = "opacity .5s ease";
+                setTimeout(() => {
+                    pre.style.display = "none";
+                    window.scrollTo(0, 0);
+                }, 600);
+            }, 800); // small delay so animation is visible
+        });
+
+        /* ------------------------------- */
+        /* DOM ELEMENTS */
+        /* ------------------------------- */
+        const form = document.getElementById("rsvpForm");
+
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+        const customCodeInput = document.getElementById("customCode");
+        const countryCode = document.getElementById("countryCode");
+
+        const ticketQtyInput = document.getElementById("ticketQty");
+        const ticketPriceLabel = document.getElementById("ticketPriceLabel");
+        const totalAmountEl = document.getElementById("totalAmount");
+
+        const submittingText = document.getElementById("submittingText");
+
+        // Errors
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const phoneError = document.getElementById("phoneError");
+        const ticketError = document.getElementById("ticketError");
+
+        // Modal
+        const successModal = document.getElementById("successModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const closeModalIcon = document.getElementById("closeModalIcon");
+        const modalTicketId = document.getElementById("modalTicketId");
+        const modalTicketQty = document.getElementById("modalTicketQty");
+        const modalTotalAmount = document.getElementById("modalTotalAmount");
+        const modalNoteRow = document.getElementById("modalNoteRow");
+        const modalNoteText = document.getElementById("modalNoteText");
+        const downloadTicketBtn = document.getElementById("downloadTicketBtn");
+
+        const noteInput = document.getElementById("note");
+
+        const TICKET_PRICE = 150;
+        ticketPriceLabel.textContent = TICKET_PRICE;
+
+        /* ------------------------------- */
+        /* COUNTRY CODE SWITCH */
+        /* ------------------------------- */
+        countryCode.addEventListener("change", () => {
+            if (countryCode.value === "custom") {
+                customCodeInput.classList.remove("hidden");
+                customCodeInput.focus();
+            } else {
+                customCodeInput.classList.add("hidden");
+            }
+        });
+
+        /* ------------------------------- */
+        /* TOTAL CALCULATION */
+        /* ------------------------------- */
+        function updateTotal() {
+            let qty = parseInt(ticketQtyInput.value, 10);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            const total = qty * TICKET_PRICE;
+            totalAmountEl.textContent = total;
+        }
+
+        ticketQtyInput.addEventListener("input", updateTotal);
+        updateTotal();
+
+        /* ------------------------------- */
+        /* VALIDATION HELPERS */
+        /* ------------------------------- */
+        function showError(el, show) {
+            el.classList.toggle("hidden", !show);
+        }
+
+        function validateName() {
+            const ok = nameInput.value.trim().length >= 3;
+            showError(nameError, !ok);
+            return ok;
+        }
+
+        function validateEmail() {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const ok = re.test(emailInput.value.trim());
+            showError(emailError, !ok);
+            return ok;
+        }
+
+        function validatePhone() {
+            const code = (countryCode.value === "custom" ? customCodeInput.value.trim() : countryCode.value);
+            const num = phoneInput.value.trim();
+            const full = code + num;
+
+            const re = /^[0-9+]{4,5}[0-9]{7,15}$/;
+            const ok = re.test(full);
+            showError(phoneError, !ok);
+            return ok;
+        }
+
+        function validateTickets() {
+            const qty = parseInt(ticketQtyInput.value, 10);
+            const ok = !isNaN(qty) && qty >= 1;
+            showError(ticketError, !ok);
+            return ok;
+        }
+
+        nameInput.addEventListener("blur", validateName);
+        emailInput.addEventListener("blur", validateEmail);
+        phoneInput.addEventListener("blur", validatePhone);
+        ticketQtyInput.addEventListener("blur", validateTickets);
+
+        /* ------------------------------- */
+        /* TICKET ID GENERATOR */
+        /* ------------------------------- */
+        function generateTicketId() {
+            const randomNum = Math.floor(100000 + Math.random() * 900000);
+            return `EVT-${randomNum}`;
+        }
+
+        /* ------------------------------- */
+        /* MODAL HELPERS */
+        /* ------------------------------- */
+        function openModal() {
+    successModal.classList.remove("pointer-events-none");
+    successModal.classList.remove("opacity-0");
+}
+
+
+        function closeModal() {
+            successModal.classList.add("opacity-0");
+
+            // Wait for fade-out animation BEFORE disabling clicks
+            setTimeout(() => {
+                successModal.classList.add("pointer-events-none");
+            }, 300); // matches your transition duration
+        }
+
+
+        closeModalBtn.addEventListener("click", closeModal);
+        closeModalIcon.addEventListener("click", closeModal);
+
+        successModal.addEventListener("click", (e) => {
+            if (e.target === successModal) {
+                closeModal();
+            }
+        });
+
+        /* ------------------------------- */
+        /* DOWNLOAD TICKET PDF */
+        /* ------------------------------- */
+        downloadTicketBtn.addEventListener("click", () => {
+            if (!window.jspdf) return;
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const ticketId = modalTicketId.textContent;
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const qty = modalTicketQty.textContent;
+            const total = modalTotalAmount.textContent;
+            const note = modalNoteText.textContent;
+
+            doc.setFontSize(18);
+            doc.text("Eventora – Event Ticket", 20, 20);
+
+            doc.setFontSize(12);
+            doc.text(`Name: ${name}`, 20, 35);
+            doc.text(`Email: ${email}`, 20, 43);
+            doc.text(`Ticket ID: ${ticketId}`, 20, 51);
+            doc.text(`Tickets: ${qty}`, 20, 59);
+            doc.text(`Total Paid: GH₵ ${total}`, 20, 67);
+
+            if (note && note.trim() !== "") {
+                doc.text("Note:", 20, 75);
+                doc.text(note, 20, 83);
+            }
+
+            doc.text("Thank you for choosing Eventora!", 20, 100);
+
+            doc.save(`Eventora_Ticket_${ticketId}.pdf`);
+        });
+
+        /* ------------------------------- */
+        /* FORM SUBMIT */
+        /* ------------------------------- */
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const valid =
+                validateName() &&
+                validateEmail() &&
+                validatePhone() &&
+                validateTickets();
+
+            if (!valid) {
+                return;
+            }
+
+            const ticketId = generateTicketId();
+            const qty = parseInt(ticketQtyInput.value, 10);
+            const total = qty * TICKET_PRICE;
+            const note = noteInput.value.trim();
+
+            // Fill modal data
+            modalTicketId.textContent = ticketId;
+            modalTicketQty.textContent = qty;
+            modalTotalAmount.textContent = total;
+
+            if (note !== "") {
+                modalNoteRow.classList.remove("hidden");
+                modalNoteText.textContent = note;
+            } else {
+                modalNoteRow.classList.add("hidden");
+                modalNoteText.textContent = "";
+            }
+
+            // Show "processing" text
+            submittingText.classList.remove("hidden");
+
+            // Prepare data for Google Sheets (Apps Script)
+            const fullPhone =
+                (countryCode.value === "custom" ? customCodeInput.value.trim() : countryCode.value) +
+                phoneInput.value.trim();
+
+            const payload = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: fullPhone,
+                ticketId: ticketId,
+                ticketQty: qty,
+                totalAmount: total,
+                note: note,
+                timestamp: new Date().toISOString(),
+            };
+
+            // 🔁 Replace this URL with your real Apps Script Web App URL
+            const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+            // Try to send to Google Sheets, but show popup anyway
+            fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            }).catch((err) => {
+                console.warn("RSVP send error (still showing success modal):", err);
+            }).finally(() => {
+                submittingText.classList.add("hidden");
+                // Show success modal on the same page
+                openModal();
+                // Reset form fields (but keep values in memory for PDF)
+                form.reset();
+                customCodeInput.classList.add("hidden");
+                ticketQtyInput.value = 1;
+                updateTotal();
+            });
+        });
+    </script>
+
+</body>
+
+</html>
